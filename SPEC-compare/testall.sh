@@ -20,7 +20,7 @@ for dir in */; do
 
     # 检查 autotest.py 是否存在
     if [ -f "autotest.py" ]; then
-        echo "▶️  正在执行: python3 autotest.py -s 3 -j 110"
+        echo "▶️  正在执行: python3 autotest.py -s 3 -j 120"
         echo ""
         
         # 执行 Python 脚本
