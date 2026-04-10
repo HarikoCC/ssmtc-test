@@ -24,7 +24,7 @@ for dir in */; do
         echo ""
         
         # 执行 Python 脚本
-        python3 autotest.py -s 3 -j 110
+        python3 autotest.py -s 3 -j 120
         
         # 捕获执行结果的返回码
         EXIT_CODE=$?
