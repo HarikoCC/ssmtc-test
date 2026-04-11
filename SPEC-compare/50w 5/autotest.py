@@ -100,7 +100,7 @@ def main():
     create_logs_directory()
     
     # 搜索当前目录所有.arg文件
-    arg_files = glob.glob("*.arg")
+    arg_files = sorted(glob.glob("*.arg"))
     if not arg_files:
         print("错误：当前目录下未找到任何.arg文件！")
         sys.exit(1)

@@ -4691,525 +4691,465 @@ _simoo_mem_obj:
 	jmp.n	 r1
 	addu	 r31,r31,80
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    data
+data
 	align	 8
-_last_op:
-	word	 0
-	word	 0
-	word	 0
-	zero	 12
-	align	 8
-@LC531:
+@LC520:
 	string	 "sim-outorder.c\000"
 	align	 8
-@LC532:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC533:
-	string	 "drained and speculative\000"
-	align	 8
-@LC534:
-	string	 "ss.def\000"
-	align	 8
-@LC535:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC536:
-	string	 "bad jump alignment\000"
-	align	 8
-@LC537:
-	string	 "ss.def\000"
-	align	 8
-@LC538:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC539:
-	string	 "bad jump alignment\000"
-	align	 8
-@LC540:
-	string	 "ss.def\000"
-	align	 8
-@LC541:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC542:
-	string	 "bad INT register alignment\000"
-	align	 8
-@LC543:
-	string	 "ss.def\000"
-	align	 8
-@LC544:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC545:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC546:
-	string	 "ss.def\000"
-	align	 8
-@LC547:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC548:
-	string	 "bad INT register alignment\000"
-	align	 8
-@LC549:
-	string	 "ss.def\000"
-	align	 8
-@LC550:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC551:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC552:
-	string	 "ss.def\000"
-	align	 8
-@LC553:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC554:
-	string	 "bad INT register alignment\000"
-	align	 8
-@LC555:
-	string	 "ss.def\000"
-	align	 8
-@LC556:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC557:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC558:
-	string	 "ss.def\000"
-	align	 8
-@LC559:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC560:
-	string	 "bad INT register alignment\000"
-	align	 8
-@LC561:
-	string	 "ss.def\000"
-	align	 8
-@LC562:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC563:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC564:
-	string	 "ss.def\000"
-	align	 8
-@LC565:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC566:
-	string	 "+ overflow\000"
-	align	 8
-@LC567:
-	string	 "ss.def\000"
-	align	 8
-@LC568:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC569:
-	string	 "+ underflow\000"
-	align	 8
-@LC570:
-	string	 "ss.def\000"
-	align	 8
-@LC571:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC572:
-	string	 "+ overflow\000"
-	align	 8
-@LC573:
-	string	 "ss.def\000"
-	align	 8
-@LC574:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC575:
-	string	 "+ underflow\000"
-	align	 8
-@LC576:
-	string	 "ss.def\000"
-	align	 8
-@LC577:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC578:
-	string	 "- overflow\000"
-	align	 8
-@LC579:
-	string	 "ss.def\000"
-	align	 8
-@LC580:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC581:
-	string	 "- underflow\000"
-	align	 8
-@LC582:
-	string	 "ss.def\000"
-	align	 8
-@LC583:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC584:
-	string	 "divide by 0\000"
-	align	 8
-@LC585:
-	string	 "ss.def\000"
-	align	 8
-@LC586:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC587:
-	string	 "divide by 0\000"
-	align	 8
-@LC588:
-	string	 "ss.def\000"
-	align	 8
-@LC589:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC590:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC591:
-	string	 "ss.def\000"
-	align	 8
-@LC592:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC593:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC594:
-	string	 "ss.def\000"
-	align	 8
-@LC595:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC596:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC597:
-	string	 "ss.def\000"
-	align	 8
-@LC598:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC599:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC600:
-	string	 "ss.def\000"
-	align	 8
-@LC601:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC602:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC603:
-	string	 "ss.def\000"
-	align	 8
-@LC604:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC605:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC606:
-	string	 "ss.def\000"
-	align	 8
-@LC607:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC608:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC609:
-	string	 "ss.def\000"
-	align	 8
-@LC610:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC611:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC612:
-	string	 "ss.def\000"
-	align	 8
-@LC613:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC614:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC615:
-	string	 "ss.def\000"
-	align	 8
-@LC616:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC617:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC618:
-	string	 "ss.def\000"
-	align	 8
-@LC619:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC620:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC621:
-	string	 "ss.def\000"
-	align	 8
-@LC622:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC623:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC624:
-	string	 "ss.def\000"
-	align	 8
-@LC625:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC626:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC627:
-	string	 "ss.def\000"
-	align	 8
-@LC628:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC629:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC630:
-	string	 "ss.def\000"
-	align	 8
-@LC631:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC632:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC633:
-	string	 "ss.def\000"
-	align	 8
-@LC634:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC635:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC636:
-	string	 "ss.def\000"
-	align	 8
-@LC637:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC638:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC639:
-	string	 "ss.def\000"
-	align	 8
-@LC640:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC641:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC642:
-	string	 "ss.def\000"
-	align	 8
-@LC643:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC644:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC645:
-	string	 "ss.def\000"
-	align	 8
-@LC646:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC647:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC648:
-	string	 "ss.def\000"
-	align	 8
-@LC649:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC650:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC651:
-	string	 "ss.def\000"
-	align	 8
-@LC652:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC653:
-	string	 "divide by 0\000"
-	align	 8
-@LC654:
-	string	 "ss.def\000"
-	align	 8
-@LC655:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC656:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC657:
-	string	 "ss.def\000"
-	align	 8
-@LC658:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC659:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC660:
-	string	 "ss.def\000"
-	align	 8
-@LC661:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC662:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC663:
-	string	 "ss.def\000"
-	align	 8
-@LC664:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC665:
-	string	 "divide by 0\000"
-	align	 8
-@LC666:
-	string	 "ss.def\000"
-	align	 8
-@LC667:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC668:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC669:
-	string	 "ss.def\000"
-	align	 8
-@LC670:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC671:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC672:
-	string	 "ss.def\000"
-	align	 8
-@LC673:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC674:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC675:
-	string	 "ss.def\000"
-	align	 8
-@LC676:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC677:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC678:
-	string	 "ss.def\000"
-	align	 8
-@LC679:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC680:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC681:
-	string	 "ss.def\000"
-	align	 8
-@LC682:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC683:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC684:
-	string	 "ss.def\000"
-	align	 8
-@LC685:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC686:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC687:
-	string	 "ss.def\000"
-	align	 8
-@LC688:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC689:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC690:
-	string	 "ss.def\000"
-	align	 8
-@LC691:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC692:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC693:
-	string	 "ss.def\000"
-	align	 8
-@LC694:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC695:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC696:
-	string	 "ss.def\000"
-	align	 8
-@LC697:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC698:
-	string	 "bad FP register alignment\000"
-	align	 8
-@LC699:
-	string	 "ss.def\000"
-	align	 8
-@LC700:
-	string	 "ruu_dispatch\000"
-	align	 8
-@LC701:
-	string	 "bad FP register alignment\000"
-	align	 8
-@L
+@LC521:
+	string	 "ruu_link_idep\000"
+	align	 8
+@LC522:
+	string	 "out of rs links\000"
+	align	 8
+@LC523:
+	string	 "register number out of range\000"
+	align	 8
+@LC524:
+	string	 "register number out of range\000"
+	align	 8
+@LC525:
+	string	 "sim-outorder.c\000"
+	align	 8
+@LC526:
+	string	 "simoo_reg_obj\000"
+	align	 8
+@LC527:
+	string	 "bogus register bank\000"
+	align	 8
+@LC528:
+	string	 "sim-outorder.c\000"
+	align	 8
+@LC529:
+	string	 "simoo_reg_obj\000"
+	align	 8
+@LC530:
+	string	 "bogus access type\000"
+text
+	align	 8
+_simoo_reg_obj:
+	subu	 r31,r31,48
+	cmp	 r13,r4,31
+	bb1.n	 ls,r13,@L1648
+	st	 r1,r31,36
+@Ltb16:
+	or.u	 r2,r0,hi16(@LC523)
+	br.n	 @L1723
+	or	 r2,r2,lo16(@LC523)
+	align	 4
+@L1648:
+	cmp	 r13,r2,1
+	bb0.n	 ls,r13,@L1649
+	or.u	 r13,r0,hi16(@L1721)
+	cmp	 r12,r3,7
+	bb0.n	 ls,r12,@L1720
+	or	 r13,r13,lo16(@L1721)
+	ld	 r13,r13[r3]
+	jmp	 r13
+	align	 4
+@L1721:
+	word	 @L1651
+	word	 @L1662
+	word	 @L1673
+	word	 @L1684
+	word	 @L1696
+	word	 @L1703
+	word	 @L1710
+	word	 @L1717
+	align	 4
+@L1651:
+	bcnd.n	 ne0,r2,@L1652
+	or.u	 r13,r0,hi16(_spec_mode)
+	bcnd.n	 ge0,r4,@L1655
+	or	 r10,r0,r4
+	addu	 r10,r4,31
+@L1655:
+	ext	 r10,r10,0<5>
+	or.u	 r12,r0,hi16(_use_spec_R)
+	or	 r13,r0,1
+	mak	 r11,r10,0<5>
+	or	 r12,r12,lo16(_use_spec_R)
+	subu	 r11,r4,r11
+	ld	 r12,r12[r10]
+	mak	 r13,r13,r11
+	and	 r12,r12,r13
+	bcnd	 eq0,r12,@L1653
+	or.u	 r13,r0,hi16(_spec_regs_R)
+	br.n	 @L1725
+	or	 r13,r13,lo16(_spec_regs_R)
+	align	 4
+@L1653:
+	or.u	 r13,r0,hi16(_regs_R)
+	br.n	 @L1725
+	or	 r13,r13,lo16(_regs_R)
+	align	 4
+@L1652:
+	ld	 r13,r13,lo16(_spec_mode)
+	bcnd	 eq0,r13,@L1658
+	bcnd.n	 ge0,r4,@L1660
+	or	 r9,r0,r4
+	addu	 r9,r4,31
+@L1660:
+	ext	 r9,r9,0<5>
+	or.u	 r10,r0,hi16(_use_spec_R)
+	or	 r13,r0,1
+	mak	 r11,r9,0<5>
+	or	 r10,r10,lo16(_use_spec_R)
+	subu	 r11,r4,r11
+	ld	 r12,r10[r9]
+	mak	 r13,r13,r11
+	or	 r12,r12,r13
+	st	 r12,r10[r9]
+	or.u	 r13,r0,hi16(_spec_regs_R)
+	ld	 r12,r0,r5
+	or	 r13,r13,lo16(_spec_regs_R)
+	br.n	 @L1722
+	st	 r12,r13[r4]
+	align	 4
+@L1658:
+	or.u	 r13,r0,hi16(_regs_R)
+	ld	 r12,r0,r5
+	or	 r13,r13,lo16(_regs_R)
+	br.n	 @L1722
+	st	 r12,r13[r4]
+	align	 4
+@L1662:
+	bcnd.n	 ne0,r2,@L1663
+	or.u	 r13,r0,hi16(_spec_mode)
+	and	 r13,r4,0xfffe
+	bcnd.n	 ge0,r13,@L1666
+	or	 r10,r0,r13
+	addu	 r10,r13,31
+@L1666:
+	ext	 r10,r10,0<5>
+	or.u	 r12,r0,hi16(_use_spec_F)
+	mak	 r11,r10,0<5>
+	or	 r12,r12,lo16(_use_spec_F)
+	subu	 r11,r13,r11
+	or	 r13,r0,1
+	ld	 r12,r12[r10]
+	mak	 r13,r13,r11
+	and	 r12,r12,r13
+	bcnd.n	 eq0,r12,@L1664
+	or.u	 r13,r0,hi16(_spec_regs_F)
+	br.n	 @L1725
+	or	 r13,r13,lo16(_spec_regs_F)
+	align	 4
+@L1664:
+	or.u	 r13,r0,hi16(_regs_F)
+	or	 r13,r13,lo16(_regs_F)
+@L1725:
+	ld	 r4,r13[r4]
+	br.n	 @L1722
+	st	 r4,r0,r5
+	align	 4
+@L1663:
+	ld	 r13,r13,lo16(_spec_mode)
+	bcnd.n	 eq0,r13,@L1669
+	and	 r13,r4,0xfffe
+	bcnd.n	 ge0,r13,@L1671
+	or	 r9,r0,r13
+	addu	 r9,r13,31
+@L1671:
+	ext	 r9,r9,0<5>
+	or.u	 r10,r0,hi16(_use_spec_F)
+	mak	 r11,r9,0<5>
+	or	 r10,r10,lo16(_use_spec_F)
+	subu	 r11,r13,r11
+	or	 r13,r0,1
+	ld	 r12,r10[r9]
+	mak	 r13,r13,r11
+	or	 r12,r12,r13
+	st	 r12,r10[r9]
+	or.u	 r13,r0,hi16(_spec_regs_F)
+	ld	 r12,r0,r5
+	or	 r13,r13,lo16(_spec_regs_F)
+	br.n	 @L1722
+	st	 r12,r13[r4]
+	align	 4
+@L1669:
+	or.u	 r13,r0,hi16(_regs_F)
+	ld	 r12,r0,r5
+	or	 r13,r13,lo16(_regs_F)
+	br.n	 @L1722
+	st	 r12,r13[r4]
+	align	 4
+@L1673:
+	bcnd.n	 ne0,r2,@L1674
+	or.u	 r13,r0,hi16(_spec_mode)
+	and	 r13,r4,0xfffe
+	bcnd.n	 ge0,r13,@L1677
+	or	 r10,r0,r13
+	addu	 r10,r13,31
+@L1677:
+	ext	 r10,r10,0<5>
+	or.u	 r12,r0,hi16(_use_spec_F)
+	mak	 r11,r10,0<5>
+	or	 r12,r12,lo16(_use_spec_F)
+	subu	 r11,r13,r11
+	or	 r13,r0,1
+	ld	 r12,r12[r10]
+	mak	 r13,r13,r11
+	and	 r12,r12,r13
+	bcnd.n	 eq0,r12,@L1675
+	or.u	 r13,r0,hi16(_spec_regs_F)
+	br.n	 @L1726
+	or	 r13,r13,lo16(_spec_regs_F)
+	align	 4
+@L1675:
+	or.u	 r13,r0,hi16(_regs_F)
+	or	 r13,r13,lo16(_regs_F)
+@L1726:
+	ld	 r4,r13[r4]
+	br.n	 @L1722
+	st	 r4,r0,r5
+	align	 4
+@L1674:
+	ld	 r13,r13,lo16(_spec_mode)
+	bcnd.n	 eq0,r13,@L1680
+	and	 r13,r4,0xfffe
+	bcnd.n	 ge0,r13,@L1682
+	or	 r9,r0,r13
+	addu	 r9,r13,31
+@L1682:
+	ext	 r9,r9,0<5>
+	or.u	 r10,r0,hi16(_use_spec_F)
+	mak	 r12,r9,0<5>
+	or	 r10,r10,lo16(_use_spec_F)
+	subu	 r12,r13,r12
+	or	 r13,r0,1
+	ld	 r11,r10[r9]
+	mak	 r13,r13,r12
+	or.u	 r12,r0,hi16(_spec_regs_F)
+	or	 r11,r11,r13
+	st	 r11,r10[r9]
+	or	 r12,r12,lo16(_spec_regs_F)
+	ld	 r5,r0,r5
+	br.n	 @L1722
+	st	 r5,r12[r4]
+	align	 4
+@L1680:
+	or.u	 r13,r0,hi16(_regs_F)
+	or	 r13,r13,lo16(_regs_F)
+	ld	 r5,r0,r5
+	br.n	 @L1722
+	st	 r5,r13[r4]
+	align	 4
+@L1684:
+	cmp	 r13,r4,15
+	bb1	 ls,r13,@L1685
+	or.u	 r2,r0,hi16(@LC524)
+	br.n	 @L1723
+	or	 r2,r2,lo16(@LC524)
+	align	 4
+@L1685:
+	bcnd.n	 ne0,r2,@L1686
+	or.u	 r13,r0,hi16(_spec_mode)
+	mak	 r4,r4,0<1>
+	and	 r13,r4,0xfffe
+	bcnd.n	 ge0,r13,@L1689
+	or	 r10,r0,r13
+	addu	 r10,r13,31
+@L1689:
+	ext	 r10,r10,0<5>
+	or.u	 r12,r0,hi16(_use_spec_F)
+	mak	 r11,r10,0<5>
+	or	 r12,r12,lo16(_use_spec_F)
+	subu	 r11,r13,r11
+	or	 r13,r0,1
+	ld	 r12,r12[r10]
+	mak	 r13,r13,r11
+	and	 r12,r12,r13
+	bcnd.n	 eq0,r12,@L1687
+	or.u	 r13,r0,hi16(_spec_regs_F)
+	ext	 r12,r4,0<1>
+	br.n	 @L1727
+	or	 r13,r13,lo16(_spec_regs_F)
+	align	 4
+@L1687:
+	or.u	 r13,r0,hi16(_regs_F)
+	ext	 r12,r4,0<1>
+	or	 r13,r13,lo16(_regs_F)
+@L1727:
+	ld.d	 r12,r13[r12]
+	fsub.sds r13,r12,r0
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1686:
+	ld	 r13,r13,lo16(_spec_mode)
+	bcnd	 eq0,r13,@L1692
+	mak	 r4,r4,0<1>
+	and	 r13,r4,0xfffe
+	bcnd.n	 ge0,r13,@L1694
+	or	 r9,r0,r13
+	addu	 r9,r13,31
+@L1694:
+	ext	 r9,r9,0<5>
+	or.u	 r10,r0,hi16(_use_spec_F)
+	mak	 r11,r9,0<5>
+	or	 r10,r10,lo16(_use_spec_F)
+	subu	 r11,r13,r11
+	or	 r13,r0,1
+	ld	 r12,r10[r9]
+	mak	 r13,r13,r11
+	or	 r12,r12,r13
+	st	 r12,r10[r9]
+	or.u	 r11,r0,hi16(_spec_regs_F)
+	ld	 r13,r0,r5
+	ext	 r10,r4,0<1>
+	or	 r11,r11,lo16(_spec_regs_F)
+	fsub.dss r12,r13,r0
+	br.n	 @L1722
+	st.d	 r12,r11[r10]
+	align	 4
+@L1692:
+	or.u	 r13,r0,hi16(_regs_F)
+	ld	 r12,r0,r5
+	or	 r13,r13,lo16(_regs_F)
+	fsub.dss r10,r12,r0
+	br.n	 @L1722
+	st.d	 r10,r13[r4]
+	align	 4
+@L1696:
+	bcnd.n	 ne0,r2,@L1697
+	or.u	 r13,r0,hi16(_spec_mode)
+	or.u	 r13,r0,hi16(_use_spec_HI)
+	ld	 r13,r13,lo16(_use_spec_HI)
+	bcnd.n	 eq0,r13,@L1698
+	or.u	 r13,r0,hi16(_spec_regs_HI)
+	ld	 r13,r13,lo16(_spec_regs_HI)
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1698:
+	or.u	 r13,r0,hi16(_regs_HI)
+	ld	 r13,r13,lo16(_regs_HI)
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1697:
+	ld	 r13,r13,lo16(_spec_mode)
+	bcnd.n	 eq0,r13,@L1701
+	or.u	 r12,r0,hi16(_use_spec_HI)
+	or	 r13,r0,1
+	st	 r13,r12,lo16(_use_spec_HI)
+	ld	 r12,r0,r5
+	or.u	 r13,r0,hi16(_spec_regs_HI)
+	br.n	 @L1722
+	st	 r12,r13,lo16(_spec_regs_HI)
+	align	 4
+@L1701:
+	ld	 r12,r0,r5
+	or.u	 r13,r0,hi16(_regs_HI)
+	br.n	 @L1722
+	st	 r12,r13,lo16(_regs_HI)
+	align	 4
+@L1703:
+	bcnd.n	 ne0,r2,@L1704
+	or.u	 r13,r0,hi16(_spec_mode)
+	or.u	 r13,r0,hi16(_use_spec_LO)
+	ld	 r13,r13,lo16(_use_spec_LO)
+	bcnd.n	 eq0,r13,@L1705
+	or.u	 r13,r0,hi16(_spec_regs_LO)
+	ld	 r13,r13,lo16(_spec_regs_LO)
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1705:
+	or.u	 r13,r0,hi16(_regs_LO)
+	ld	 r13,r13,lo16(_regs_LO)
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1704:
+	ld	 r13,r13,lo16(_spec_mode)
+	bcnd.n	 eq0,r13,@L1708
+	or.u	 r12,r0,hi16(_use_spec_LO)
+	or	 r13,r0,1
+	st	 r13,r12,lo16(_use_spec_LO)
+	ld	 r12,r0,r5
+	or.u	 r13,r0,hi16(_spec_regs_LO)
+	br.n	 @L1722
+	st	 r12,r13,lo16(_spec_regs_LO)
+	align	 4
+@L1708:
+	ld	 r12,r0,r5
+	or.u	 r13,r0,hi16(_regs_LO)
+	br.n	 @L1722
+	st	 r12,r13,lo16(_regs_LO)
+	align	 4
+@L1710:
+	bcnd.n	 ne0,r2,@L1711
+	or.u	 r13,r0,hi16(_spec_mode)
+	or.u	 r13,r0,hi16(_use_spec_FCC)
+	ld	 r13,r13,lo16(_use_spec_FCC)
+	bcnd.n	 eq0,r13,@L1712
+	or.u	 r13,r0,hi16(_spec_regs_FCC)
+	ld	 r13,r13,lo16(_spec_regs_FCC)
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1712:
+	or.u	 r13,r0,hi16(_regs_FCC)
+	ld	 r13,r13,lo16(_regs_FCC)
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1711:
+	ld	 r13,r13,lo16(_spec_mode)
+	bcnd.n	 eq0,r13,@L1715
+	or.u	 r12,r0,hi16(_use_spec_FCC)
+	or	 r13,r0,1
+	st	 r13,r12,lo16(_use_spec_FCC)
+	ld	 r12,r0,r5
+	or.u	 r13,r0,hi16(_spec_regs_FCC)
+	br.n	 @L1722
+	st	 r12,r13,lo16(_spec_regs_FCC)
+	align	 4
+@L1715:
+	ld	 r12,r0,r5
+	or.u	 r13,r0,hi16(_regs_FCC)
+	br.n	 @L1722
+	st	 r12,r13,lo16(_regs_FCC)
+	align	 4
+@L1717:
+	bcnd.n	 ne0,r2,@L1718
+	or.u	 r13,r0,hi16(_regs_PC)
+	ld	 r13,r13,lo16(_regs_PC)
+	br.n	 @L1722
+	st	 r13,r0,r5
+	align	 4
+@L1718:
+	ld	 r12,r0,r5
+	br.n	 @L1722
+	st	 r12,r13,lo16(_regs_PC)
+	align	 4
+@L1720:
+	or.u	 r2,r0,hi16(@LC525)
+	or	 r4,r0,3315
+	or.u	 r3,r0,hi16(@LC526)
+	or.u	 r5,r0,hi16(@LC527)
+	or	 r2,r2,lo16(@LC525)
+	or	 r3,r3,lo16(@LC526)
+	bsr.n	 __panic
+	or	 r5,r5,lo16(@LC527)
+	align	 4
+@L1649:
+	or.u	 r2,r0,hi16(@LC528)
+	or	 r4,r0,3319
+	or.u	 r3,r0,hi16(@LC529)
+	or.u	 r5,r0,hi16(@LC530)
+	or	 r2,r2,lo16(@LC528)
+	or	 r3,r3,lo16(@LC529)
+	bsr.n	 __panic
+	or	 r5,r5,lo16(@LC530)
+	align	 4
+@L1722:
+	or	 r2,r0,0
+@L1723:
+@Lte16:
+	ld	 r1,r31,36
+	jmp.n	 r1
+	addu	 r31,r31,48
+
