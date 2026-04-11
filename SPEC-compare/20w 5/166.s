@@ -5153,3 +5153,525 @@ _simoo_reg_obj:
 	jmp.n	 r1
 	addu	 r31,r31,48
 
+data
+	align	 8
+_last_op:
+	word	 0
+	word	 0
+	word	 0
+	zero	 12
+	align	 8
+@LC531:
+	string	 "sim-outorder.c\000"
+	align	 8
+@LC532:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC533:
+	string	 "drained and speculative\000"
+	align	 8
+@LC534:
+	string	 "ss.def\000"
+	align	 8
+@LC535:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC536:
+	string	 "bad jump alignment\000"
+	align	 8
+@LC537:
+	string	 "ss.def\000"
+	align	 8
+@LC538:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC539:
+	string	 "bad jump alignment\000"
+	align	 8
+@LC540:
+	string	 "ss.def\000"
+	align	 8
+@LC541:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC542:
+	string	 "bad INT register alignment\000"
+	align	 8
+@LC543:
+	string	 "ss.def\000"
+	align	 8
+@LC544:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC545:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC546:
+	string	 "ss.def\000"
+	align	 8
+@LC547:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC548:
+	string	 "bad INT register alignment\000"
+	align	 8
+@LC549:
+	string	 "ss.def\000"
+	align	 8
+@LC550:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC551:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC552:
+	string	 "ss.def\000"
+	align	 8
+@LC553:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC554:
+	string	 "bad INT register alignment\000"
+	align	 8
+@LC555:
+	string	 "ss.def\000"
+	align	 8
+@LC556:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC557:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC558:
+	string	 "ss.def\000"
+	align	 8
+@LC559:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC560:
+	string	 "bad INT register alignment\000"
+	align	 8
+@LC561:
+	string	 "ss.def\000"
+	align	 8
+@LC562:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC563:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC564:
+	string	 "ss.def\000"
+	align	 8
+@LC565:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC566:
+	string	 "+ overflow\000"
+	align	 8
+@LC567:
+	string	 "ss.def\000"
+	align	 8
+@LC568:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC569:
+	string	 "+ underflow\000"
+	align	 8
+@LC570:
+	string	 "ss.def\000"
+	align	 8
+@LC571:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC572:
+	string	 "+ overflow\000"
+	align	 8
+@LC573:
+	string	 "ss.def\000"
+	align	 8
+@LC574:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC575:
+	string	 "+ underflow\000"
+	align	 8
+@LC576:
+	string	 "ss.def\000"
+	align	 8
+@LC577:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC578:
+	string	 "- overflow\000"
+	align	 8
+@LC579:
+	string	 "ss.def\000"
+	align	 8
+@LC580:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC581:
+	string	 "- underflow\000"
+	align	 8
+@LC582:
+	string	 "ss.def\000"
+	align	 8
+@LC583:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC584:
+	string	 "divide by 0\000"
+	align	 8
+@LC585:
+	string	 "ss.def\000"
+	align	 8
+@LC586:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC587:
+	string	 "divide by 0\000"
+	align	 8
+@LC588:
+	string	 "ss.def\000"
+	align	 8
+@LC589:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC590:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC591:
+	string	 "ss.def\000"
+	align	 8
+@LC592:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC593:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC594:
+	string	 "ss.def\000"
+	align	 8
+@LC595:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC596:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC597:
+	string	 "ss.def\000"
+	align	 8
+@LC598:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC599:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC600:
+	string	 "ss.def\000"
+	align	 8
+@LC601:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC602:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC603:
+	string	 "ss.def\000"
+	align	 8
+@LC604:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC605:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC606:
+	string	 "ss.def\000"
+	align	 8
+@LC607:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC608:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC609:
+	string	 "ss.def\000"
+	align	 8
+@LC610:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC611:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC612:
+	string	 "ss.def\000"
+	align	 8
+@LC613:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC614:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC615:
+	string	 "ss.def\000"
+	align	 8
+@LC616:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC617:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC618:
+	string	 "ss.def\000"
+	align	 8
+@LC619:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC620:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC621:
+	string	 "ss.def\000"
+	align	 8
+@LC622:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC623:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC624:
+	string	 "ss.def\000"
+	align	 8
+@LC625:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC626:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC627:
+	string	 "ss.def\000"
+	align	 8
+@LC628:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC629:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC630:
+	string	 "ss.def\000"
+	align	 8
+@LC631:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC632:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC633:
+	string	 "ss.def\000"
+	align	 8
+@LC634:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC635:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC636:
+	string	 "ss.def\000"
+	align	 8
+@LC637:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC638:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC639:
+	string	 "ss.def\000"
+	align	 8
+@LC640:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC641:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC642:
+	string	 "ss.def\000"
+	align	 8
+@LC643:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC644:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC645:
+	string	 "ss.def\000"
+	align	 8
+@LC646:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC647:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC648:
+	string	 "ss.def\000"
+	align	 8
+@LC649:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC650:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC651:
+	string	 "ss.def\000"
+	align	 8
+@LC652:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC653:
+	string	 "divide by 0\000"
+	align	 8
+@LC654:
+	string	 "ss.def\000"
+	align	 8
+@LC655:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC656:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC657:
+	string	 "ss.def\000"
+	align	 8
+@LC658:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC659:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC660:
+	string	 "ss.def\000"
+	align	 8
+@LC661:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC662:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC663:
+	string	 "ss.def\000"
+	align	 8
+@LC664:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC665:
+	string	 "divide by 0\000"
+	align	 8
+@LC666:
+	string	 "ss.def\000"
+	align	 8
+@LC667:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC668:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC669:
+	string	 "ss.def\000"
+	align	 8
+@LC670:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC671:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC672:
+	string	 "ss.def\000"
+	align	 8
+@LC673:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC674:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC675:
+	string	 "ss.def\000"
+	align	 8
+@LC676:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC677:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC678:
+	string	 "ss.def\000"
+	align	 8
+@LC679:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC680:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC681:
+	string	 "ss.def\000"
+	align	 8
+@LC682:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC683:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC684:
+	string	 "ss.def\000"
+	align	 8
+@LC685:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC686:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC687:
+	string	 "ss.def\000"
+	align	 8
+@LC688:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC689:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC690:
+	string	 "ss.def\000"
+	align	 8
+@LC691:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC692:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC693:
+	string	 "ss.def\000"
+	align	 8
+@LC694:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC695:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC696:
+	string	 "ss.def\000"
+	align	 8
+@LC697:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC698:
+	string	 "bad FP register alignment\000"
+	align	 8
+@LC699:
+	string	 "ss.def\000"
+	align	 8
+@LC700:
+	string	 "ruu_dispatch\000"
+	align	 8
+@LC701:
+	string	 "bad FP register alignment\000"
+	align	 8
+@L
