@@ -5108,3 +5108,172 @@ _move_block_to_reg:
 	jmp.n	 r1
 	addu	 r31,r31,80
 
+	align	 8
+	global	 _move_block_from_reg
+_move_block_from_reg:
+	subu	 r31,r31,80
+	st	 r1,r31,64
+	st.d	 r20,r31,40
+	or	 r21,r0,r3
+	st	 r19,r31,36
+	or	 r19,r0,r4
+	st.d	 r22,r31,48
+	or	 r23,r0,0
+	bcnd.n	 le0,r19,@L1400
+	st.d	 r24,r31,56
+@Ltb14:
+	or	 r22,r0,r2
+	mask	 r12,r19,3
+	bcnd.n	 eq0,r12,@L1402
+	or.u	 r20,r0,hi16(_word_mode)
+	cmp	 r13,r12,1
+	bb0.n	 gt,r13,@L1407
+	cmp	 r13,r12,2
+	bb0.n	 gt,r13,@L1408
+	or	 r2,r0,r21
+	or	 r3,r0,0
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,16
+	or	 r25,r0,r2
+	bcnd.n	 ne0,r25,@L1411
+	or	 r2,r0,51
+	bsr	 _abort
+	align	 4
+@L1411:
+	ld	 r3,r20,lo16(_word_mode)
+	or	 r4,r0,r22
+	bsr.n	 _gen_rtx
+	addu	 r22,r22,1
+	or	 r3,r0,r2
+	or	 r2,r0,r25
+	bsr.n	 _emit_move_insn
+	or	 r23,r0,1
+@L1408:
+	or	 r2,r0,r21
+	or	 r3,r0,r23
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,16
+	or	 r25,r0,r2
+	bcnd.n	 ne0,r25,@L1414
+	or	 r2,r0,51
+	bsr	 _abort
+	align	 4
+@L1414:
+	ld	 r3,r20,lo16(_word_mode)
+	or	 r4,r0,r22
+	bsr.n	 _gen_rtx
+	addu	 r22,r22,1
+	or	 r3,r0,r2
+	or	 r2,r0,r25
+	bsr.n	 _emit_move_insn
+	addu	 r23,r23,1
+@L1407:
+	or	 r2,r0,r21
+	or	 r3,r0,r23
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,16
+	or	 r25,r0,r2
+	bcnd.n	 ne0,r25,@L1417
+	or	 r2,r0,51
+	bsr	 _abort
+	align	 4
+@L1417:
+	ld	 r3,r20,lo16(_word_mode)
+	bsr.n	 _gen_rtx
+	or	 r4,r0,r22
+	or	 r3,r0,r2
+	or	 r2,r0,r25
+	bsr.n	 _emit_move_insn
+	addu	 r23,r23,1
+	cmp	 r13,r23,r19
+	bb0.n	 lt,r13,@L1400
+	addu	 r22,r22,1
+@L1402:
+	or	 r2,r0,r21
+	or	 r3,r0,r23
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,16
+	or	 r25,r0,r2
+	bcnd	 ne0,r25,@L1420
+	bsr	 _abort
+	align	 4
+@L1420:
+	ld	 r3,r20,lo16(_word_mode)
+	or	 r2,r0,51
+	bsr.n	 _gen_rtx
+	or	 r4,r0,r22
+	or	 r3,r0,r2
+	bsr.n	 _emit_move_insn
+	or	 r2,r0,r25
+	or	 r2,r0,r21
+	addu	 r3,r23,1
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,16
+	or	 r24,r0,r2
+	bcnd.n	 ne0,r24,@L1423
+	addu	 r25,r22,1
+	bsr	 _abort
+	align	 4
+@L1423:
+	ld	 r3,r20,lo16(_word_mode)
+	or	 r2,r0,51
+	bsr.n	 _gen_rtx
+	or	 r4,r0,r25
+	or	 r3,r0,r2
+	bsr.n	 _emit_move_insn
+	or	 r2,r0,r24
+	or	 r2,r0,r21
+	addu	 r3,r23,2
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,16
+	or	 r24,r0,r2
+	bcnd.n	 ne0,r24,@L1426
+	addu	 r25,r22,2
+	bsr	 _abort
+	align	 4
+@L1426:
+	ld	 r3,r20,lo16(_word_mode)
+	or	 r2,r0,51
+	bsr.n	 _gen_rtx
+	or	 r4,r0,r25
+	or	 r3,r0,r2
+	bsr.n	 _emit_move_insn
+	or	 r2,r0,r24
+	or	 r2,r0,r21
+	addu	 r3,r23,3
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,16
+	or	 r24,r0,r2
+	bcnd.n	 ne0,r24,@L1429
+	addu	 r25,r22,3
+	bsr	 _abort
+	align	 4
+@L1429:
+	ld	 r3,r20,lo16(_word_mode)
+	or	 r2,r0,51
+	bsr.n	 _gen_rtx
+	or	 r4,r0,r25
+	or	 r3,r0,r2
+	or	 r2,r0,r24
+	bsr.n	 _emit_move_insn
+	addu	 r23,r23,4
+	cmp	 r13,r23,r19
+	bb1.n	 lt,r13,@L1402
+	addu	 r22,r22,4
+@L1400:
+@Lte14:
+	ld	 r1,r31,64
+	ld	 r19,r31,36
+	ld.d	 r24,r31,56
+	ld.d	 r22,r31,48
+	ld.d	 r20,r31,40
+	jmp.n	 r1
+	addu	 r31,r31,80
+
