@@ -1,0 +1,600 @@
+测试组合：gcc-200.arg + matmul.arg + randacc.arg
+执行命令：./smtsim gcc-200.arg matmul.arg randacc.arg
+==================================================
+
+动态重分配参数：每20万周期检查，阈值5
+Process 0, Thread 0: gcc-200
+Process 1, Thread 1: matmul
+Process 2, Thread 2: randacc
+[切片调度] 新安全域0无任何切片，尝试分配空闲切片
+[切片管理] 成功绑定切片0 → 安全域0
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  否   |  0
+  1    |   域-1     | 切片空闲   |  否   |  0
+  2    |   域-1     | 切片空闲   |  否   |  0
+  3    |   域-1     | 切片空闲   |  否   |  0
+==================================================================
+
+[切片管理] 成功绑定切片1 → 安全域0，触发【路扩展模式】
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  0
+  1    |   域0      | 正常运行   |  是   |  0
+  2    |   域-1     | 切片空闲   |  否   |  0
+  3    |   域-1     | 切片空闲   |  否   |  0
+==================================================================
+
+[切片调度] 新安全域1无任何切片，尝试分配空闲切片
+[切片管理] 成功绑定切片2 → 安全域1
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  320
+  1    |   域0      | 正常运行   |  是   |  0
+  2    |   域1      | 正常运行   |  否   |  0
+  3    |   域-1     | 切片空闲   |  否   |  0
+==================================================================
+
+[切片管理] 成功绑定切片3 → 安全域1，触发【路扩展模式】
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  320
+  1    |   域0      | 正常运行   |  是   |  0
+  2    |   域1      | 正常运行   |  是   |  0
+  3    |   域1      | 正常运行   |  是   |  0
+==================================================================
+
+[切片调度] 新安全域2无任何切片，尝试分配空闲切片
+[切片调度] 新安全域2未找到空闲切片，尝试剥夺切片
+[切片替换] 优先从【路扩展切片】中选择LRU替换目标...
+[切片替换] 找到路扩展切片作为受害者：切片1（最后访问：0）
+[切片调度] 安全域2触发切片剥夺：从域0剥夺切片1
+[切片剥夺] 周期434：切片1（所属域0）进入待剥夺状态，禁止新替换
+[切片剥夺] 周期434：切片1在途请求已清空，开始执行脏行写回
+[切片剥夺] 周期434：切片1无脏行，直接完成剥夺
+[切片管理] 周期434：原域0仅剩1个切片，关闭路扩展模式
+[动态重分配] 周期434：切片1写回完成，自动绑定到域2
+[切片管理] 成功绑定切片1 → 安全域2
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  否   |  320
+  1    |   域2      | 正常运行   |  否   |  434
+  2    |   域1      | 正常运行   |  是   |  396
+  3    |   域1      | 正常运行   |  是   |  0
+==================================================================
+
+[切片唤醒] 周期434：域2切片就绪，唤醒等待指令
+
+**** Debug Statistics at 1000000 Cycles *****
+Threads: 3		Fetch Width: 8
+No of useful instructions fetched:	3863563 (48.29% proc util.)
+No of total instructions fetched:	4162615 (52.03% proc util.)
+ includes 22514 misfetch (0.5%), 276538 (6.6%) wrong-path fetches
+ and 0 flushed after failed lock(0.0%)
+No of useful instructions issued/executed:	3863523 (48.29% proc util.)
+No of total instructions issued/executed:	3964299 (49.55% proc util.)
+ includes 100776 wrong-path (2.5%) insts and 0 flushed (0.0%)
+	fp 82, 0.00%
+	synch 0, 0.00%
+	integer 2877667, 72.59%
+	load/store 1086550, 27.41%
+Avg size of int IQ (before scheduling): 28.17
+Avg size of fp IQ (before scheduling): 0.00
+No of cycles taken:		1000000
+Parallelism [ 0.975, 1.596, 1.292,] = 3.864
+ IQ conflicts: 1436 (0.14%), FQ conflicts: 0 (0.00%) 
+ I reg conflicts: 365262 (36.53%), FP reg conflicts: 0 (0.00%)
+  Activelist confs: 2 (0.00%), ROB confs: 685 (0.07%)
+  Int unit conflicts: 1942169 (194.22%), FP unit conflicts: 1 (0.00%)
+  Load/store unit conflicts: 133672 (13.37%)
+  MSHR conflicts: 129731 (12.97%)
+----------------------------------------
+==== System-wide Cache Statistics ====
+Stall for miss queue full 0 cycles (0.00%)
+----------------------------------------
+==== Statistics for Master ID: 0 ====
+Reads: 580679   Writes: 152979
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:355318 misses:2115  Hit Ratio: 99.41%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:372394 misses:3831 writebacks:2687  Hit Ratio: 98.98%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:939 misses:5006  Hit Ratio: 15.79%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:114 misses:4892  Hit Ratio: 2.28%
+3CACHE: dirty items replaced:0
+ITLB: size: 48, misses 133, miss rate 0.04%
+DTLB: size: 128, misses 188, miss rate 0.05%
+Avg mem delay: 1.233 cycles
+----------------------------------------
+==== Statistics for Master ID: 1 ====
+Reads: 890235   Writes: 166593
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:423865 misses:37  Hit Ratio: 99.99%
+DCACHE: size: 2*16 KB assoc: 2*4
+DCACHE: hits:631693 misses:1233 writebacks:685  Hit Ratio: 99.81%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:302 misses:968  Hit Ratio: 23.78%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:105 misses:863  Hit Ratio: 10.85%
+3CACHE: dirty items replaced:0
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 22, miss rate 0.00%
+Avg mem delay: 1.233 cycles
+----------------------------------------
+==== Statistics for Master ID: 2 ====
+Reads: 450059   Writes: 37
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:372895 misses:33  Hit Ratio: 99.99%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:60081 misses:17086 writebacks:13  Hit Ratio: 77.86%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:16268 misses:851  Hit Ratio: 95.03%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:69 misses:782  Hit Ratio: 8.11%
+3CACHE: dirty items replaced:0
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 22, miss rate 0.03%
+Avg mem delay: 1.233 cycles
+----------------------------------------
+==== Global Resource Utilization ====
+STASH: size: 65536 entries, full 4240715, empty 48182, misses 4560, full rate 98.77
+icache bank util. 0.209 0.542 0.127 0.053 0.037 0.047 0.052 0.093 
+dcache bank util. 0.129 0.142 0.110 0.117 0.128 0.172 0.192 0.172 
+L2 bank util. 0.021 0.020 0.020 0.020 0.020 0.020 0.019 0.020 
+L1-L2 bus util. = 0.083, L3 util. = 0.065
+----------------------------------------
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  否   |  999895
+  1    |   域2      | 正常运行   |  否   |  999995
+  2    |   域1      | 正常运行   |  是   |  999996
+  3    |   域1      | 正常运行   |  是   |  999994
+==================================================================
+
+branch prediction, hits = 328785, misses = 13576, hit rate = 96.03%
+return_stack prediction, hits = 17956, misses = 22, hit rate = 99.88%
+jump prediction, hits = 392300, misses = 5905, hit rate = 98.52%
+ abend_ adia_ adib_ ambm6_ analie6_ betalf_
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  否   |  1199995
+  1    |   域2      | 正常运行   |  否   |  1199994
+  2    |   域1      | 正常运行   |  是   |  1199996
+  3    |   域1      | 正常运行   |  是   |  1199997
+==================================================================
+
+[动态重分配] 周期1200000：预约迁移 冗余域1(0%) -> 切片2 -> 饥饿域2(22%)
+[切片剥夺] 周期1200000：切片2（所属域1）进入待剥夺状态，禁止新替换
+[切片剥夺] 周期1200000：切片2在途请求已清空，开始执行脏行写回
+[切片管理] 周期1202394：原域1仅剩1个切片，关闭路扩展模式
+[动态重分配] 周期1202394：切片2写回完成，自动绑定到域2
+[切片管理] 成功绑定切片2 → 安全域2，触发【路扩展模式】
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  否   |  1202394
+  1    |   域2      | 正常运行   |  是   |  1202384
+  2    |   域2      | 正常运行   |  是   |  1202394
+  3    |   域1      | 正常运行   |  否   |  1202380
+==================================================================
+
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  否   |  29200000
+  1    |   域2      | 正常运行   |  是   |  29199980
+  2    |   域2      | 正常运行   |  是   |  29199994
+  3    |   域1      | 正常运行   |  否   |  29199998
+==================================================================
+
+[动态重分配] 周期29200000：预约迁移 冗余域2(0%) -> 切片1 -> 饥饿域0(6%)
+[切片剥夺] 周期29200000：切片1（所属域2）进入待剥夺状态，禁止新替换
+[切片剥夺] 周期29200000：切片1在途请求已清空，开始执行脏行写回
+[切片剥夺] 周期29200000：切片1无脏行，直接完成剥夺
+[切片管理] 周期29200001：原域2仅剩1个切片，关闭路扩展模式
+[动态重分配] 周期29200001：切片1写回完成，自动绑定到域0
+[切片管理] 成功绑定切片1 → 安全域0，触发【路扩展模式】
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  29200001
+  1    |   域0      | 正常运行   |  是   |  29200001
+  2    |   域2      | 正常运行   |  否   |  29199994
+  3    |   域1      | 正常运行   |  否   |  29199998
+==================================================================
+
+
+**** Debug Statistics at 101000000 Cycles *****
+Threads: 3		Fetch Width: 8
+No of useful instructions fetched:	454329581 (56.23% proc util.)
+No of total instructions fetched:	547384464 (67.75% proc util.)
+ includes 15274313 misfetch (2.8%), 77780570 (14.2%) wrong-path fetches
+ and 0 flushed after failed lock(0.0%)
+No of useful instructions issued/executed:	454329542 (56.23% proc util.)
+No of total instructions issued/executed:	487469749 (60.33% proc util.)
+ includes 33140207 wrong-path (6.8%) insts and 0 flushed (0.0%)
+	fp 13602, 0.00%
+	synch 0, 0.00%
+	integer 350442483, 71.89%
+	load/store 137013664, 28.11%
+Avg size of int IQ (before scheduling): 33.83
+Avg size of fp IQ (before scheduling): 0.00
+No of cycles taken:		101000000
+Parallelism [ 1.237, 1.699, 1.562,] = 4.498
+ IQ conflicts: 194514 (0.19%), FQ conflicts: 0 (0.00%) 
+ I reg conflicts: 18756220 (18.57%), FP reg conflicts: 0 (0.00%)
+  Activelist confs: 93 (0.00%), ROB confs: 41566 (0.04%)
+  Int unit conflicts: 205413432 (203.38%), FP unit conflicts: 17 (0.00%)
+  Load/store unit conflicts: 15332293 (15.18%)
+  MSHR conflicts: 4643118 (4.60%)
+----------------------------------------
+==== System-wide Cache Statistics ====
+Stall for miss queue full 96 cycles (0.00%)
+----------------------------------------
+==== Statistics for Master ID: 0 ====
+Reads: 98065504   Writes: 17223913
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:55195664 misses:928341  Hit Ratio: 98.35%
+DCACHE: size: 2*16 KB assoc: 2*4
+DCACHE: hits:58138545 misses:1026867 writebacks:273418  Hit Ratio: 98.26%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:1669973 misses:285235  Hit Ratio: 85.41%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:211733 misses:73502  Hit Ratio: 74.23%
+3CACHE: dirty items replaced:2297
+ITLB: size: 48, misses 53062, miss rate 0.09%
+DTLB: size: 128, misses 37286, miss rate 0.06%
+Avg mem delay: 1.248 cycles
+----------------------------------------
+==== Statistics for Master ID: 1 ====
+Reads: 100862825   Writes: 16981808
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:49473181 misses:67775  Hit Ratio: 99.86%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:65709430 misses:2594372 writebacks:17413  Hit Ratio: 96.20%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:2627753 misses:34268  Hit Ratio: 98.71%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:31321 misses:2947  Hit Ratio: 91.40%
+3CACHE: dirty items replaced:30
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 561, miss rate 0.00%
+Avg mem delay: 1.248 cycles
+----------------------------------------
+==== Statistics for Master ID: 2 ====
+Reads: 56326702   Writes: 42
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:46839510 misses:84414  Hit Ratio: 99.82%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:7904873 misses:1497946 writebacks:18  Hit Ratio: 84.07%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:1554806 misses:27554  Hit Ratio: 98.26%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:24432 misses:3122  Hit Ratio: 88.67%
+3CACHE: dirty items replaced:28
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 344, miss rate 0.00%
+Avg mem delay: 1.248 cycles
+----------------------------------------
+==== Global Resource Utilization ====
+STASH: size: 65536 entries, full 554600108, empty 15843409, misses 1388409, full rate 96.99
+icache bank util. 0.279 0.684 0.148 0.072 0.073 0.070 0.072 0.145 
+dcache bank util. 0.180 0.190 0.185 0.186 0.189 0.239 0.175 0.173 
+L2 bank util. 0.033 0.053 0.046 0.044 0.043 0.046 0.032 0.032 
+L1-L2 bus util. = 0.193, L3 util. = 0.008
+----------------------------------------
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  100999993
+  1    |   域0      | 正常运行   |  是   |  100999997
+  2    |   域2      | 正常运行   |  否   |  100999997
+  3    |   域1      | 正常运行   |  否   |  100999999
+==================================================================
+
+branch prediction, hits = 40242707, misses = 3025788, hit rate = 93.01%
+return_stack prediction, hits = 1678358, misses = 3106, hit rate = 99.82%
+jump prediction, hits = 43202670, misses = 3544687, hit rate = 92.42%
+ block_ blockdis_
+**** Debug Statistics at 201000000 Cycles *****
+Threads: 3		Fetch Width: 8
+No of useful instructions fetched:	916261678 (56.98% proc util.)
+No of total instructions fetched:	1085834140 (67.53% proc util.)
+ includes 25451475 misfetch (2.3%), 144120987 (13.3%) wrong-path fetches
+ and 0 flushed after failed lock(0.0%)
+No of useful instructions issued/executed:	916261652 (56.98% proc util.)
+No of total instructions issued/executed:	977986741 (60.82% proc util.)
+ includes 61725089 wrong-path (6.3%) insts and 0 flushed (0.0%)
+	fp 49072, 0.01%
+	synch 0, 0.00%
+	integer 701851082, 71.76%
+	load/store 276086587, 28.23%
+Avg size of int IQ (before scheduling): 34.09
+Avg size of fp IQ (before scheduling): 0.01
+No of cycles taken:		201000000
+Parallelism [ 1.341, 1.677, 1.541,] = 4.559
+ IQ conflicts: 506657 (0.25%), FQ conflicts: 0 (0.00%) 
+ I reg conflicts: 38086156 (18.95%), FP reg conflicts: 0 (0.00%)
+  Activelist confs: 93 (0.00%), ROB confs: 178612 (0.09%)
+  Int unit conflicts: 432738542 (215.29%), FP unit conflicts: 20 (0.00%)
+  Load/store unit conflicts: 31454367 (15.65%)
+  MSHR conflicts: 9185409 (4.57%)
+----------------------------------------
+==== System-wide Cache Statistics ====
+Stall for miss queue full 96 cycles (0.00%)
+----------------------------------------
+==== Statistics for Master ID: 0 ====
+Reads: 202691338   Writes: 36294122
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:114276536 misses:1504419  Hit Ratio: 98.70%
+DCACHE: size: 2*16 KB assoc: 2*4
+DCACHE: hits:121028366 misses:2176139 writebacks:553695  Hit Ratio: 98.23%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:3142090 misses:538468  Hit Ratio: 85.37%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:428476 misses:109992  Hit Ratio: 79.57%
+3CACHE: dirty items replaced:9398
+ITLB: size: 48, misses 72757, miss rate 0.06%
+DTLB: size: 128, misses 92296, miss rate 0.07%
+Avg mem delay: 1.300 cycles
+----------------------------------------
+==== Statistics for Master ID: 1 ====
+Reads: 197524980   Writes: 33350769
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:96556298 misses:148207  Hit Ratio: 99.85%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:129066111 misses:5105258 writebacks:33461  Hit Ratio: 96.19%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:5183091 misses:70248  Hit Ratio: 98.66%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:63513 misses:6735  Hit Ratio: 90.41%
+3CACHE: dirty items replaced:396
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 1083, miss rate 0.00%
+Avg mem delay: 1.300 cycles
+----------------------------------------
+==== Statistics for Master ID: 2 ====
+Reads: 110330087   Writes: 52
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:91684849 misses:186938  Hit Ratio: 99.80%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:14964266 misses:3494085 writebacks:28  Hit Ratio: 81.07%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:3623632 misses:57390  Hit Ratio: 98.44%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:49918 misses:7472  Hit Ratio: 86.98%
+3CACHE: dirty items replaced:495
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 1235, miss rate 0.01%
+Avg mem delay: 1.300 cycles
+----------------------------------------
+==== Global Resource Utilization ====
+STASH: size: 65536 entries, full 1104767573, empty 26805438, misses 2376347, full rate 97.43
+icache bank util. 0.275 0.674 0.148 0.081 0.078 0.071 0.072 0.143 
+dcache bank util. 0.183 0.191 0.192 0.188 0.189 0.241 0.180 0.177 
+L2 bank util. 0.033 0.055 0.047 0.044 0.044 0.047 0.033 0.033 
+L1-L2 bus util. = 0.197, L3 util. = 0.006
+----------------------------------------
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  200999998
+  1    |   域0      | 正常运行   |  是   |  200999999
+  2    |   域2      | 正常运行   |  否   |  200999997
+  3    |   域1      | 正常运行   |  否   |  200999996
+==================================================================
+
+branch prediction, hits = 83433617, misses = 5553733, hit rate = 93.76%
+return_stack prediction, hits = 3734343, misses = 6580, hit rate = 99.82%
+jump prediction, hits = 90249946, misses = 5992836, hit rate = 93.77%
+ caconv_ calrms_ chroma_ cinvar_ clor6_
+**** Debug Statistics at 301000000 Cycles *****
+Threads: 3		Fetch Width: 8
+No of useful instructions fetched:	1363001494 (56.60% proc util.)
+No of total instructions fetched:	1623992529 (67.44% proc util.)
+ includes 39405428 misfetch (2.4%), 221585607 (13.6%) wrong-path fetches
+ and 0 flushed after failed lock(0.0%)
+No of useful instructions issued/executed:	1363001450 (56.60% proc util.)
+No of total instructions issued/executed:	1457476957 (60.53% proc util.)
+ includes 94475507 wrong-path (6.5%) insts and 0 flushed (0.0%)
+	fp 70892, 0.00%
+	synch 0, 0.00%
+	integer 1046564908, 71.81%
+	load/store 410841157, 28.19%
+Avg size of int IQ (before scheduling): 33.86
+Avg size of fp IQ (before scheduling): 0.01
+No of cycles taken:		301000000
+Parallelism [ 1.317, 1.673, 1.538,] = 4.528
+ IQ conflicts: 744950 (0.25%), FQ conflicts: 0 (0.00%) 
+ I reg conflicts: 57141105 (18.98%), FP reg conflicts: 0 (0.00%)
+  Activelist confs: 177 (0.00%), ROB confs: 280228 (0.09%)
+  Int unit conflicts: 633308596 (210.40%), FP unit conflicts: 20 (0.00%)
+  Load/store unit conflicts: 45861009 (15.24%)
+  MSHR conflicts: 11706424 (3.89%)
+----------------------------------------
+==== System-wide Cache Statistics ====
+Stall for miss queue full 96 cycles (0.00%)
+----------------------------------------
+==== Statistics for Master ID: 0 ====
+Reads: 301512233   Writes: 53341323
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:170039678 misses:2380922  Hit Ratio: 98.62%
+DCACHE: size: 2*16 KB assoc: 2*4
+DCACHE: hits:179459176 misses:2973780 writebacks:799038  Hit Ratio: 98.37%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:4527968 misses:826734  Hit Ratio: 84.56%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:668633 misses:158100  Hit Ratio: 80.88%
+3CACHE: dirty items replaced:27641
+ITLB: size: 48, misses 120859, miss rate 0.07%
+DTLB: size: 128, misses 134985, miss rate 0.07%
+Avg mem delay: 1.299 cycles
+----------------------------------------
+==== Statistics for Master ID: 1 ====
+Reads: 295328861   Writes: 49812159
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:144493839 misses:232791  Hit Ratio: 99.84%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:192773079 misses:7641436 writebacks:49599  Hit Ratio: 96.19%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:7766961 misses:107140  Hit Ratio: 98.64%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:92547 misses:14593  Hit Ratio: 86.38%
+3CACHE: dirty items replaced:1942
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 1615, miss rate 0.00%
+Avg mem delay: 1.299 cycles
+----------------------------------------
+==== Statistics for Master ID: 2 ====
+Reads: 165192659   Writes: 65
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:137296721 misses:294458  Hit Ratio: 99.79%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:22089887 misses:5511657 writebacks:40  Hit Ratio: 80.03%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:5722194 misses:83920  Hit Ratio: 98.55%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:68259 misses:15661  Hit Ratio: 81.34%
+3CACHE: dirty items replaced:2109
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 1567, miss rate 0.01%
+Avg mem delay: 1.299 cycles
+----------------------------------------
+==== Global Resource Utilization ====
+STASH: size: 65536 entries, full 1650922970, empty 41579036, misses 3673643, full rate 97.33
+icache bank util. 0.274 0.673 0.148 0.080 0.078 0.072 0.072 0.143 
+dcache bank util. 0.181 0.187 0.191 0.188 0.191 0.240 0.180 0.176 
+L2 bank util. 0.033 0.056 0.047 0.044 0.044 0.048 0.033 0.033 
+L1-L2 bus util. = 0.198, L3 util. = 0.006
+----------------------------------------
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  300999993
+  1    |   域0      | 正常运行   |  是   |  300999999
+  2    |   域2      | 正常运行   |  否   |  300999994
+  3    |   域1      | 正常运行   |  否   |  300999997
+==================================================================
+
+branch prediction, hits = 123216024, misses = 8625437, hit rate = 93.46%
+return_stack prediction, hits = 5389624, misses = 10324, hit rate = 99.81%
+jump prediction, hits = 133281890, misses = 9278851, hit rate = 93.49%
+
+**** Early Exiting at 331063733 Cycles *****
+========================================
+ SMTSIM Global Statistics
+========================================
+Threads: 3		Fetch Width: 8
+No of useful instructions fetched:	1500000118 (56.64% proc util.)
+No of total instructions fetched:	1791287620 (67.63% proc util.)
+ includes 44253092 misfetch (2.5%), 247034410 (13.8%) wrong-path fetches
+ and 0 flushed after failed lock(0.0%)
+No of useful instructions issued/executed:	1500000067 (56.64% proc util.)
+No of total instructions issued/executed:	1605141488 (60.61% proc util.)
+ includes 105141421 wrong-path (6.6%) insts and 0 flushed (0.0%)
+	fp 71299, 0.00%
+	synch 0, 0.00%
+	integer 1151672590, 71.75%
+	load/store 453397599, 28.25%
+Avg size of int IQ (before scheduling): 33.88
+Avg size of fp IQ (before scheduling): 0.01
+No of cycles taken:		331063733
+Parallelism [ 1.324, 1.671, 1.536,] = 4.531
+ IQ conflicts: 898816 (0.27%), FQ conflicts: 0 (0.00%) 
+ I reg conflicts: 62359499 (18.84%), FP reg conflicts: 0 (0.00%)
+  Activelist confs: 177 (0.00%), ROB confs: 305291 (0.09%)
+  Int unit conflicts: 701498526 (211.89%), FP unit conflicts: 22 (0.00%)
+  Load/store unit conflicts: 51217964 (15.47%)
+  MSHR conflicts: 14193195 (4.29%)
+----------------------------------------
+==== System-wide Cache Statistics ====
+Stall for miss queue full 96 cycles (0.00%)
+----------------------------------------
+==== Statistics for Master ID: 0 ====
+Reads: 334390820   Writes: 59269132
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:188578361 misses:2565751  Hit Ratio: 98.66%
+DCACHE: size: 2*16 KB assoc: 2*4
+DCACHE: hits:199229465 misses:3286375 writebacks:913472  Hit Ratio: 98.38%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:4944924 misses:907202  Hit Ratio: 84.50%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:732840 misses:174362  Hit Ratio: 80.78%
+3CACHE: dirty items replaced:33038
+ITLB: size: 48, misses 122879, miss rate 0.06%
+DTLB: size: 128, misses 152013, miss rate 0.08%
+Avg mem delay: 1.303 cycles
+----------------------------------------
+==== Statistics for Master ID: 1 ====
+Reads: 324537957   Writes: 54705826
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:158894363 misses:244507  Hit Ratio: 99.85%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:211716034 misses:8389004 writebacks:54397  Hit Ratio: 96.19%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:8516635 misses:116751  Hit Ratio: 98.65%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:100289 misses:16462  Hit Ratio: 85.90%
+3CACHE: dirty items replaced:2469
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 1780, miss rate 0.00%
+Avg mem delay: 1.303 cycles
+----------------------------------------
+==== Statistics for Master ID: 2 ====
+Reads: 181792275   Writes: 72
+ICACHE: size: 64 KB assoc: 2
+ICACHE: hits:151168242 misses:305066  Hit Ratio: 99.80%
+DCACHE: size: 1*16 KB assoc: 1*4
+DCACHE: hits:24208469 misses:6110569 writebacks:47  Hit Ratio: 79.85%
+SCACHE: size: 512 KB assoc: 2
+SCACHE: hits:6324311 misses:91324  Hit Ratio: 98.58%
+3CACHE: size: 4096 KB assoc: 2
+3CACHE: hits:73755 misses:17569  Hit Ratio: 80.76%
+3CACHE: dirty items replaced:2665
+ITLB: size: 48, misses 4, miss rate 0.00%
+DTLB: size: 128, misses 1705, miss rate 0.01%
+Avg mem delay: 1.303 cycles
+----------------------------------------
+==== Global Resource Utilization ====
+STASH: size: 65536 entries, full 1821783031, empty 45487410, misses 4021039, full rate 97.35
+icache bank util. 0.275 0.673 0.148 0.079 0.079 0.073 0.072 0.143 
+dcache bank util. 0.183 0.188 0.191 0.189 0.192 0.239 0.180 0.176 
+L2 bank util. 0.033 0.055 0.047 0.045 0.044 0.048 0.033 0.033 
+L1-L2 bus util. = 0.198, L3 util. = 0.006
+----------------------------------------
+
+======================== 切片硬件状态 ========================
+切片号 | 所属安全域 | 当前状态    | 路扩展 | LRU touched
+------------------------------------------------------------------
+  0    |   域0      | 正常运行   |  是   |  331063730
+  1    |   域0      | 正常运行   |  是   |  331063732
+  2    |   域2      | 正常运行   |  否   |  331063723
+  3    |   域1      | 正常运行   |  否   |  331063730
+==================================================================
+
+branch prediction, hits = 135771752, misses = 9613167, hit rate = 93.39%
+return_stack prediction, hits = 5922873, misses = 10426, hit rate = 99.82%
+jump prediction, hits = 146554386, misses = 10394348, hit rate = 93.38%
+total IPC 4.531
+
+=== Results saved to: ./results/gcc-200_1_matmul_1_randacc_1.txt ===
