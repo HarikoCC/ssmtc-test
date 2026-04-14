@@ -49,9 +49,19 @@ def is_combination_valid(combination):
         used_programs.add(base_name)
     return True
 
+def has_cache_benchmark(combination):
+    """
+    检查组合中是否至少包含一个 cacheseq 或 cacherand 相关文件
+    """
+    for f in combination:
+        if "cacheseq" in f or "cacherand" in f:
+            return True
+    return False
+
 def categorize_arg_files():
     """
     分类收集当前目录下的测试文件，按线程数归类
+    【恢复原逻辑：加载所有.arg/.arg2/.arg3/.arg4文件，不做过滤】
     """
     file_dict = {
         1: glob.glob("*.arg"),    # 1线程进程文件（后缀.arg）
@@ -68,7 +78,8 @@ def categorize_arg_files():
 def validate_and_generate_combinations(file_dict, scenario_type):
     """
     根据选择的工况类型，生成合规的测试组合
-    【修改】：多线程文件在组合中排在前面
+    多线程文件在组合中排在前面
+    【新增】只保留至少含一个 cacheseq/cacherand 的组合
     """
     combinations = []
     
@@ -78,12 +89,11 @@ def validate_and_generate_combinations(file_dict, scenario_type):
             print(f"错误：工况1（1+1+1+1）需要至少4个.arg文件，当前仅找到{len(file_dict[1])}个")
             sys.exit(1)
         for candidate_comb in itertools.combinations(file_dict[1], 4):
-            if is_combination_valid(candidate_comb):
+            if is_combination_valid(candidate_comb) and has_cache_benchmark(candidate_comb):
                 combinations.append(candidate_comb)
         
     elif scenario_type == 2:
-        # 工况2：1+1+2
-        # 【修改】顺序调整为：[.arg2, .arg, .arg] (多线程优先)
+        # 工况2：1+1+2 → [.arg2, .arg, .arg] (多线程优先)
         if len(file_dict[1]) < 2:
             print(f"错误：工况2（1+1+2）需要至少2个.arg文件，当前仅找到{len(file_dict[1])}个")
             sys.exit(1)
@@ -96,14 +106,12 @@ def validate_and_generate_combinations(file_dict, scenario_type):
         
         for p1 in part_1thread:
             for p2 in part_2thread:
-                # 重新排序：把 .arg2 (p2) 放在最前面
                 candidate_comb = (p2,) + p1
-                if is_combination_valid(candidate_comb):
+                if is_combination_valid(candidate_comb) and has_cache_benchmark(candidate_comb):
                     combinations.append(candidate_comb)
                 
     elif scenario_type == 3:
-        # 工况3：1+3
-        # 【修改】顺序调整为：[.arg3, .arg] (多线程优先)
+        # 工况3：1+3 → [.arg3, .arg] (多线程优先)
         if len(file_dict[1]) < 1:
             print(f"错误：工况3（1+3）需要至少1个.arg文件，当前仅找到{len(file_dict[1])}个")
             sys.exit(1)
@@ -112,33 +120,36 @@ def validate_and_generate_combinations(file_dict, scenario_type):
             sys.exit(1)
         
         for f_arg, f_arg3 in itertools.product(file_dict[1], file_dict[3]):
-            # 重新排序：把 .arg3 放在前面
             candidate_comb = (f_arg3, f_arg)
-            if is_combination_valid(candidate_comb):
+            if is_combination_valid(candidate_comb) and has_cache_benchmark(candidate_comb):
                 combinations.append(candidate_comb)
         
     elif scenario_type == 4:
-        # 工况4：2+2 (2个.arg2，顺序不变)
+        # 工况4：2+2 (2个.arg2)
         if len(file_dict[2]) < 2:
             print(f"错误：工况4（2+2）需要至少2个.arg2文件，当前仅找到{len(file_dict[2])}个")
             sys.exit(1)
         for candidate_comb in itertools.combinations(file_dict[2], 2):
-            if is_combination_valid(candidate_comb):
+            if is_combination_valid(candidate_comb) and has_cache_benchmark(candidate_comb):
                 combinations.append(candidate_comb)
         
     elif scenario_type == 5:
-        # 工况5：4 (单个.arg4，顺序不变)
+        # 工况5：4 (单个.arg4)
         if len(file_dict[4]) < 1:
             print(f"错误：工况5（4）需要至少1个.arg4文件，当前仅找到{len(file_dict[4])}个")
             sys.exit(1)
-        combinations = [(f,) for f in file_dict[4]]
+        # 只保留包含cache的.arg4
+        for f in file_dict[4]:
+            candidate_comb = (f,)
+            if has_cache_benchmark(candidate_comb):
+                combinations.append(candidate_comb)
         
     else:
         print("错误：无效的工况类型！请选择1-5之间的数字")
         sys.exit(1)
         
     if not combinations:
-        print("错误：未生成任何有效的测试组合！")
+        print("错误：未生成任何有效的测试组合（无满足「至少含一个cacheseq/cacherand」条件的组合）！")
         sys.exit(1)
         
     return combinations
@@ -152,7 +163,6 @@ def run_single_test(combination, combination_id):
     log_filename = f"{scenario_tag}_测试{combination_id}_{timestamp}.log"
     log_file_path = os.path.join("./logs", log_filename)
     
-    # 构建命令（此时 combination 内部顺序已是多线程优先）
     cmd = ["./smtsim"] + list(combination)
     
     try:
@@ -182,12 +192,12 @@ def run_single_test(combination, combination_id):
         return (False, log_file_path, combination)
 
 def main():
-    parser = argparse.ArgumentParser(description="SMT-4混合负载自动化测试工具 (多线程优先启动版)")
+    parser = argparse.ArgumentParser(description="SMT-4混合负载自动化测试工具 (多线程优先启动版)【组合至少含一个cacheseq/cacherand】")
     parser.add_argument(
         "-s", "--scenario", 
         type=int, 
         required=True, 
-        help="测试工况编号（1-5）：1=1+1+1+1（4个单线程）、2=1+1+2（2单1双）、3=1+3（1单1三线程）、4=2+2（2个双线程）、5=4（1个四线程）"
+        help="测试工况编号（1-5）：1=1+1+1+1、2=1+1+2、3=1+3、4=2+2、5=4"
     )
     parser.add_argument(
         "-j", "--jobs", 
@@ -220,7 +230,7 @@ def main():
     
     print("="*50)
     print(f"测试工况：{args.scenario} - {scenario_name_map[args.scenario]}")
-    print(f"总测试组合数：{len(combinations)}")
+    print(f"总测试组合数（仅含至少一个cacheseq/cacherand）：{len(combinations)}")
     print(f"并行执行进程数：{args.jobs}")
     print(f"日志保存目录：./logs")
     print("="*50)
