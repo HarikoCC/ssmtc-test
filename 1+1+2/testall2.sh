@@ -33,11 +33,11 @@ for dir in */; do
 
     # 检查 smt4test.py 是否存在
     if [ -f "smt4test.py" ]; then
-        echo "▶️  正在执行: python3 smt4test.py -s 2 -j 110"
+        echo "▶️  正在执行: python3 smt4test.py -s 2 -j 120"
         echo ""
         
         # 执行 Python 脚本
-        python3 smt4test.py -s 2 -j 110
+        python3 smt4test.py -s 2 -j 120
         
         # 捕获执行结果的返回码
         EXIT_CODE=$?
