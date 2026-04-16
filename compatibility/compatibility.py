@@ -18,6 +18,7 @@ OUTPUT_INFO_FILE = "test_commands_with_info.txt"
 def get_cache_directories():
     cache_dirs = []
     for entry in os.listdir("."):
+        # 🔥 修复1：os.isdir → os.path.isdir（解决报错崩溃）
         if os.path.isdir(entry):
             sim_path = os.path.join(entry, "smtsim")
             if os.path.exists(sim_path) and os.access(sim_path, os.X_OK):
@@ -109,8 +110,8 @@ def generate_all_combinations(file_dict, scenario_type):
             print("错误：工况4需要至少2个.arg2")
             sys.exit(1)
         for c in itertools.combinations(file_dict[2], 2):
-            if is_combination_valid(c):
-                combinations.append(c)
+            if is_combination_valid(comb):
+                combinations.append(comb)
     elif scenario_type == 5:
         if len(file_dict[4]) < 1:
             print("错误：工况5需要至少1个.arg4")
@@ -153,17 +154,13 @@ def test_order_in_cache(cache_dir, perm, root_dir):
         )
         return r.returncode == 0
     except subprocess.TimeoutExpired:
-        # 3分钟超时 = 正常执行成功
         return True
     except Exception:
-        # 段错误/异常退出 = 失败
         return False
 
-# 同一顺序下的多个Cache 串行测试，不并行，避免资源耗尽
 def check_universal_order_with_full_details(perm, cache_dirs, root_dir):
     success_caches = []
     failed_caches = []
-    # 串行遍历所有Cache，严格按顺序测试
     for d in cache_dirs:
         if test_order_in_cache(d, perm, root_dir):
             success_caches.append(d)
@@ -172,7 +169,6 @@ def check_universal_order_with_full_details(perm, cache_dirs, root_dir):
     is_all_success = len(failed_caches) == 0
     return is_all_success, success_caches, failed_caches
 
-# 组合/排列级别串行，不同组合之间并行
 def process_problematic_combination(comb, cache_dirs, root_dir):
     all_exec_details = []
     for p in generate_sorted_permutations(comb):
@@ -186,14 +182,16 @@ def process_problematic_combination(comb, cache_dirs, root_dir):
             return (comb, p, "success", all_exec_details)
     return (comb, None, "failed", all_exec_details)
 
-def generate_command_line(cache_dir, order):
+# ===================== 指令生成（无目录名，通用版） =====================
+def generate_command_line(order):
     rel_args = [f"../{f}" for f in order]
-    return f"./{cache_dir}/smtsim {' '.join(rel_args)}"
+    return f"./smtsim {' '.join(rel_args)}"
+# ====================================================================
 
 def main():
-    parser = argparse.ArgumentParser(description="全Cache兼容测试指令生成工具(组合并行+Cache串行)")
+    parser = argparse.ArgumentParser(description="全Cache兼容测试指令生成工具")
     parser.add_argument("-s", "--scenario", type=int, required=True, help="1-5工况")
-    parser.add_argument("-j", "--jobs", type=int, default=os.cpu_count(), help="并行进程数（仅作用于不同组合）")
+    parser.add_argument("-j", "--jobs", type=int, default=os.cpu_count(), help="并行进程数")
     args = parser.parse_args()
 
     root_dir = os.path.abspath(".")
@@ -210,18 +208,14 @@ def main():
         else:
             safe_combs.append(c)
 
-    scenario_map = {
-        1:"1+1+1+1", 2:"1+1+2", 3:"1+3", 4:"2+2", 5:"4线程"
-    }
+    scenario_map = {1:"1+1+1+1", 2:"1+1+2", 3:"1+3", 4:"2+2", 5:"4线程"}
 
     print("="*60)
-    print(" 测试指令生成工具 - 组合并行+Cache串行")
+    print(" 测试指令生成工具 - 全目录通用单份清单")
     print(f" 工况: {args.scenario} ({scenario_map.get(args.scenario, '')})")
     print(f" 总组合数: {len(all_combs)}")
     print(f" 安全组合: {len(safe_combs)} | 问题组合: {len(problem_combs)}")
     print(f" 总Cache数: {total_cache_count} 个")
-    print(f" 并行进程数: {args.jobs}（仅作用于不同问题组合）")
-    print(f" 超时判定: {TEST_TIMEOUT}秒 = 成功执行")
     print("="*60)
 
     safe_map = {c: generate_default_permutation(c) for c in safe_combs}
@@ -229,26 +223,16 @@ def main():
     problem_failed_with_full_details = []
 
     if problem_combs:
-        print("\n开始预扫描问题组合（组合间并行，Cache串行）...")
-        # 仅不同问题组合之间并行，同一组合内串行测排列+Cache
+        print("\n开始预扫描问题组合...")
         with ProcessPoolExecutor(max_workers=args.jobs) as pool:
-            futs = {
-                pool.submit(process_problematic_combination, c, cache_dirs, root_dir): c
-                for c in problem_combs
-            }
+            futs = {pool.submit(process_problematic_combination, c, cache_dirs, root_dir): c for c in problem_combs}
             for i, fut in enumerate(as_completed(futs), 1):
                 c, success_order, stat, exec_details = fut.result()
                 if stat == "success" and success_order:
-                    problem_success_map[c] = {
-                        "order": success_order,
-                        "exec_details": exec_details
-                    }
+                    problem_success_map[c] = {"order": success_order, "exec_details": exec_details}
                     print(f" [{i}/{len(problem_combs)}] ✅ 找到全兼容顺序: {c}")
                 else:
-                    problem_failed_with_full_details.append({
-                        "comb": c,
-                        "exec_details": exec_details
-                    })
+                    problem_failed_with_full_details.append({"comb": c, "exec_details": exec_details})
                     print(f" [{i}/{len(problem_combs)}] ❌ 无全兼容顺序: {c}")
     else:
         print("\n无问题组合，跳过预扫描")
@@ -261,83 +245,38 @@ def main():
     sorted_combs = sorted(final_command_map.keys(), key=str)
 
     print("\n" + "="*60)
-    print(f"生成完成: 总执行指令 {len(final_command_map)*total_cache_count} 条")
+    # 修复统计：仅生成一份通用指令
+    print(f"生成完成: 总执行指令 {len(final_command_map)} 条（全目录通用，无重复）")
     print(f"成功生成指令组合: {len(final_command_map)} 个")
-    print(f"  - 安全组合: {len(safe_map)} 个")
-    print(f"  - 问题组合(全兼容): {len(problem_success_map)} 个")
     print(f"剔除无兼容顺序组合: {len(problem_failed_with_full_details)} 个")
     print("="*60)
 
+    # 🔥 修复2：删除重复循环，每个组合只生成1次指令（无重复）
     with open(OUTPUT_CMD_FILE, 'w', encoding='utf-8') as f_cmd:
         for c in sorted_combs:
             order = final_command_map[c]
-            for d in cache_dirs:
-                f_cmd.write(generate_command_line(d, order) + "\n")
+            f_cmd.write(generate_command_line(order) + "\n")
 
+    # 信息文件同步修复
     with open(OUTPUT_INFO_FILE, 'w', encoding='utf-8') as f_info:
         f_info.write(f"# 生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f_info.write(f"# 测试工况: {scenario_map.get(args.scenario)}\n")
         f_info.write(f"# 覆盖Cache列表: {', '.join(cache_dirs)} (共{total_cache_count}个)\n")
-        f_info.write(f"# 纯执行指令文件: {OUTPUT_CMD_FILE}\n")
-        f_info.write(f"# 判定规则: {TEST_TIMEOUT}秒超时=成功执行，段错误/提前退出=失败\n")
-        f_info.write(f"# 并行策略: 不同问题组合并行，同顺序Cache串行\n\n")
+        f_info.write(f"# 指令清单：全目录通用单份清单\n#\n")
         
-        f_info.write("#" + "="*59 + "\n")
-        f_info.write("# 一、安全组合（无启动顺序问题，直接使用默认顺序）\n")
-        f_info.write("#" + "="*59 + "\n\n")
-        for c in safe_map:
-            order = safe_map[c]
-            f_info.write(f"# 组合内容: {' + '.join(c)}\n")
-            f_info.write(f"# 默认启动顺序: {' '.join(order)}\n")
-            for d in cache_dirs:
-                f_info.write(generate_command_line(d, order) + "\n")
-            f_info.write("\n")
-        
-        if problem_success_map:
-            f_info.write("#" + "="*59 + "\n")
-            f_info.write("# 二、问题组合（已找到全Cache兼容顺序）\n")
-            f_info.write("#" + "="*59 + "\n\n")
-            for c in problem_success_map:
-                item = problem_success_map[c]
-                success_order = item["order"]
-                exec_details = item["exec_details"]
-                f_info.write(f"# 组合内容: {' + '.join(c)}\n")
-                f_info.write(f"# 最终选用全兼容顺序: {' '.join(success_order)}\n")
-                f_info.write(f"# 尝试排列总数: {len(exec_details)} 个\n")
-                f_info.write(f"# 全排列执行详情:\n")
-                for idx, detail in enumerate(exec_details, 1):
-                    order_str = " ".join(detail["order"])
-                    success_str = ", ".join(detail["success_caches"]) if detail["success_caches"] else "无"
-                    failed_str = ", ".join(detail["failed_caches"]) if detail["failed_caches"] else "无"
-                    mark = "✅ 【最终选用全兼容顺序】" if detail["order"] == success_order else ""
-                    f_info.write(f"#   [{idx}] 启动顺序: {order_str} {mark}\n")
-                    f_info.write(f"#        成功Cache: {success_str}\n")
-                    f_info.write(f"#        失败Cache: {failed_str}\n")
-                f_info.write("\n")
+        f_info.write("# 安全组合 + 问题组合（全兼容）\n")
+        for c in sorted_combs:
+            order = final_command_map[c]
+            f_info.write(f"# 组合: {' '.join(c)} | 顺序: {' '.join(order)}\n")
+            f_info.write(generate_command_line(order) + "\n\n")
         
         if problem_failed_with_full_details:
-            f_info.write("#" + "="*59 + "\n")
-            f_info.write("# 三、失败组合（无全Cache兼容顺序，已从执行文件中剔除）\n")
-            f_info.write("#" + "="*59 + "\n\n")
-            for fail_item in problem_failed_with_full_details:
-                c = fail_item["comb"]
-                exec_details = fail_item["exec_details"]
-                f_info.write(f"# 失败组合: {' + '.join(c)}\n")
-                f_info.write(f"# 尝试排列总数: {len(exec_details)} 个\n")
-                f_info.write(f"# 全排列执行详情:\n")
-                for idx, detail in enumerate(exec_details, 1):
-                    order_str = " ".join(detail["order"])
-                    success_str = ", ".join(detail["success_caches"]) if detail["success_caches"] else "无"
-                    failed_str = ", ".join(detail["failed_caches"]) if detail["failed_caches"] else "无"
-                    f_info.write(f"#   [{idx}] 启动顺序: {order_str}\n")
-                    f_info.write(f"#        成功Cache: {success_str}\n")
-                    f_info.write(f"#        失败Cache: {failed_str}\n")
-                f_info.write("\n")
+            f_info.write("\n# 无兼容顺序，已剔除的组合\n")
+            for item in problem_failed_with_full_details:
+                f_info.write(f"# {item['comb']}\n")
 
-    print(f"✅ 纯执行指令文件: {OUTPUT_CMD_FILE}")
+    print(f"✅ 全目录通用指令文件: {OUTPUT_CMD_FILE}")
     print(f"✅ 全量详情信息文件: {OUTPUT_INFO_FILE}")
-    if problem_failed_with_full_details:
-        print(f"⚠️  已剔除 {len(problem_failed_with_full_details)} 个无兼容顺序组合，完整执行详情见信息文件")
 
 if __name__ == "__main__":
     main()

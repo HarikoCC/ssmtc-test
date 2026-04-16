@@ -10,7 +10,7 @@ from datetime import datetime
 
 # ================= 配置区域 =================
 TEST_TIMEOUT = 180
-PROBLEMATIC_FILES = {"randacc.arg2", "recurseq.arg2"}
+PROBLEMATIC_FILES = {"randacc.arg2", "recurseq.arg2","randacc.arg3", "recurseq.arg3"}
 OUTPUT_CMD_FILE = "test_commands.txt"
 OUTPUT_INFO_FILE = "test_commands_with_info.txt"
 # ============================================
@@ -126,7 +126,8 @@ def generate_all_combinations(file_dict, scenario_type):
     return combinations
 
 def is_problematic_combination(comb):
-    return any(f in PROBLEMATIC_FILES for f in comb)
+    #return any(f in PROBLEMATIC_FILES for f in comb)
+    return 1;
 
 def generate_default_permutation(comb):
     return tuple(sorted(comb, key=lambda x: (-get_file_thread_weight(x), x)))
