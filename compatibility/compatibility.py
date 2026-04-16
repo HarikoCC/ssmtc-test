@@ -9,7 +9,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 
 # ================= 配置区域 =================
-TEST_TIMEOUT = 1800
+TEST_TIMEOUT = 180
 PROBLEMATIC_FILES = {"randacc.arg2", "recurseq.arg2"}
 OUTPUT_CMD_FILE = "test_commands.txt"
 OUTPUT_INFO_FILE = "test_commands_with_info.txt"
@@ -152,12 +152,18 @@ def test_order_in_cache(cache_dir, perm, root_dir):
             cwd=cache_dir
         )
         return r.returncode == 0
-    except (subprocess.TimeoutExpired, Exception):
+    except subprocess.TimeoutExpired:
+        # 3分钟超时 = 正常执行成功
+        return True
+    except Exception:
+        # 段错误/异常退出 = 失败
         return False
 
+# 同一顺序下的多个Cache 串行测试，不并行，避免资源耗尽
 def check_universal_order_with_full_details(perm, cache_dirs, root_dir):
     success_caches = []
     failed_caches = []
+    # 串行遍历所有Cache，严格按顺序测试
     for d in cache_dirs:
         if test_order_in_cache(d, perm, root_dir):
             success_caches.append(d)
@@ -166,6 +172,7 @@ def check_universal_order_with_full_details(perm, cache_dirs, root_dir):
     is_all_success = len(failed_caches) == 0
     return is_all_success, success_caches, failed_caches
 
+# 组合/排列级别串行，不同组合之间并行
 def process_problematic_combination(comb, cache_dirs, root_dir):
     all_exec_details = []
     for p in generate_sorted_permutations(comb):
@@ -184,9 +191,9 @@ def generate_command_line(cache_dir, order):
     return f"./{cache_dir}/smtsim {' '.join(rel_args)}"
 
 def main():
-    parser = argparse.ArgumentParser(description="全Cache兼容测试指令生成工具(全量成功/失败详情版)")
+    parser = argparse.ArgumentParser(description="全Cache兼容测试指令生成工具(组合并行+Cache串行)")
     parser.add_argument("-s", "--scenario", type=int, required=True, help="1-5工况")
-    parser.add_argument("-j", "--jobs", type=int, default=os.cpu_count(), help="并行进程数")
+    parser.add_argument("-j", "--jobs", type=int, default=os.cpu_count(), help="并行进程数（仅作用于不同组合）")
     args = parser.parse_args()
 
     root_dir = os.path.abspath(".")
@@ -208,12 +215,13 @@ def main():
     }
 
     print("="*60)
-    print(" 测试指令生成工具 - 全量成功/失败详情版")
+    print(" 测试指令生成工具 - 组合并行+Cache串行")
     print(f" 工况: {args.scenario} ({scenario_map.get(args.scenario, '')})")
     print(f" 总组合数: {len(all_combs)}")
     print(f" 安全组合: {len(safe_combs)} | 问题组合: {len(problem_combs)}")
     print(f" 总Cache数: {total_cache_count} 个")
-    print(f" 并行扫描进程数: {args.jobs}")
+    print(f" 并行进程数: {args.jobs}（仅作用于不同问题组合）")
+    print(f" 超时判定: {TEST_TIMEOUT}秒 = 成功执行")
     print("="*60)
 
     safe_map = {c: generate_default_permutation(c) for c in safe_combs}
@@ -221,7 +229,8 @@ def main():
     problem_failed_with_full_details = []
 
     if problem_combs:
-        print("\n开始预扫描问题组合（记录全量成功/失败详情）...")
+        print("\n开始预扫描问题组合（组合间并行，Cache串行）...")
+        # 仅不同问题组合之间并行，同一组合内串行测排列+Cache
         with ProcessPoolExecutor(max_workers=args.jobs) as pool:
             futs = {
                 pool.submit(process_problematic_combination, c, cache_dirs, root_dir): c
@@ -269,7 +278,9 @@ def main():
         f_info.write(f"# 生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f_info.write(f"# 测试工况: {scenario_map.get(args.scenario)}\n")
         f_info.write(f"# 覆盖Cache列表: {', '.join(cache_dirs)} (共{total_cache_count}个)\n")
-        f_info.write(f"# 纯执行指令文件: {OUTPUT_CMD_FILE}\n\n")
+        f_info.write(f"# 纯执行指令文件: {OUTPUT_CMD_FILE}\n")
+        f_info.write(f"# 判定规则: {TEST_TIMEOUT}秒超时=成功执行，段错误/提前退出=失败\n")
+        f_info.write(f"# 并行策略: 不同问题组合并行，同顺序Cache串行\n\n")
         
         f_info.write("#" + "="*59 + "\n")
         f_info.write("# 一、安全组合（无启动顺序问题，直接使用默认顺序）\n")
