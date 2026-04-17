@@ -1304,3 +1304,1159 @@ _convert_move:
 	def	 @L392,@L223-@L393
 	def	 @L390,@L223-@L391
 
+	align	 8
+	global	 _convert_to_mode
+_convert_to_mode:
+	subu	 r31,r31,96
+	st	 r1,r31,80
+	st	 r15,r31,36
+	st.d	 r24,r31,72
+	st.d	 r22,r31,64
+	st.d	 r20,r31,56
+	st.d	 r18,r31,48
+	or	 r25,r0,r3
+	st.d	 r16,r31,40
+@Ltb9:
+	or.u	 r12,r0,0x35
+	or	 r12,r12,0x8
+	ld	 r11,r0,r25
+	and	 r13,r11,0x8
+	or	 r24,r0,r2
+	cmp	 r13,r13,r12
+	bb1.n	 ne,r13,@L536
+	or	 r19,r0,r4
+	ld	 r13,r25,4
+	or.u	 r12,r0,hi16(_mode_size)
+	ld.bu	 r13,r13,2
+	or	 r12,r12,lo16(_mode_size)
+	ld	 r13,r12[r13]
+	ld	 r12,r12[r24]
+	cmp	 r13,r13,r12
+	bb0.n	 ge,r13,@L536
+	extu	 r13,r11,1<5>
+	cmp	 r13,r13,r19
+	bb1	 ne,r13,@L536
+	bsr	 _gen_lowpart
+	or	 r25,r0,r2
+@L536:
+	ld.bu	 r13,r25,2
+	cmp	 r13,r24,r13
+	bb0.n	 ne,r13,@L654
+	or	 r2,r0,r25
+	bcnd.n	 eq0,r19,@L538
+	or.u	 r13,r0,hi16(_mode_class)
+	or	 r13,r13,lo16(_mode_class)
+	ld	 r13,r13[r24]
+	cmp	 r13,r13,1
+	bb1.n	 ne,r13,@L538
+	or.u	 r13,r0,hi16(_mode_size)
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r13,r13[r24]
+	mak	 r13,r13,0<3>
+	cmp	 r13,r13,64
+	bb1	 ne,r13,@L538
+	ld.hu	 r13,r0,r25
+	cmp	 r13,r13,46
+	bb1	 ne,r13,@L655
+	ld	 r2,r25,4
+	bcnd.n	 ge0,r2,@L538
+	or	 r3,r0,0
+	or	 r4,r0,r24
+	bsr.n	 _immed_double_const
+	addu	 r1,r1,@L715
+@L716:
+	align	 4
+@L538:
+	ld.hu	 r13,r0,r25
+	cmp	 r13,r13,46
+	bb0.n	 ne,r13,@L697
+	or	 r2,r0,r24
+@L655:
+	or.u	 r13,r0,hi16(_mode_class)
+	or	 r12,r13,lo16(_mode_class)
+	ld	 r13,r12[r24]
+	cmp	 r13,r13,1
+	bb1.n	 ne,r13,@L698
+	or	 r2,r0,r24
+	ld.bu	 r11,r25,2
+	ld	 r13,r12[r11]
+	cmp	 r13,r13,1
+	bb1	 ne,r13,@L698
+	ld.hu	 r10,r0,r25
+	cmp	 r13,r10,47
+	bb0.n	 ne,r13,@L697
+	or.u	 r13,r0,hi16(_mode_size)
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r12,r13[r24]
+	ld	 r13,r13[r11]
+	cmp	 r12,r12,r13
+	bb1	 gt,r12,@L698
+	ld	 r13,r0,r25
+	or.u	 r12,r0,0x37
+	and	 r13,r13,0x10
+	cmp	 r13,r13,r12
+	bb1.n	 ne,r13,@L699
+	cmp	 r13,r10,51
+	or.u	 r13,r0,hi16(_direct_load)
+	or	 r13,r13,lo16(_direct_load)
+	ld.b	 r13,r24,r13
+	bcnd.n	 ne0,r13,@L700
+	or	 r3,r0,r25
+	cmp	 r13,r10,51
+@L699:
+	bb1.n	 ne,r13,@L539
+	or	 r2,r0,r24
+@L697:
+	or	 r3,r0,r25
+@L700:
+	bsr.n	 _gen_lowpart
+	addu	 r1,r1,@L717
+@L718:
+	align	 4
+@L539:
+@L698:
+	bsr.n	 _gen_reg_rtx
+	or	 r23,r0,r25
+	ld.bu	 r22,r23,2
+	or	 r17,r0,r2
+	or.u	 r13,r0,hi16(_mode_class)
+	ld.bu	 r21,r17,2
+	or	 r13,r13,lo16(_mode_class)
+	ld	 r12,r13[r21]
+	ld	 r13,r13[r22]
+	or	 r16,r0,99
+	cmp	 r12,r12,2
+	cmp	 r13,r13,2
+	extu	 r18,r12,1<eq>
+	or	 r20,r0,r17
+	bcnd.n	 eq0,r19,@L543
+	extu	 r15,r13,1<eq>
+	or	 r16,r0,100
+@L543:
+	ld.hu	 r12,r0,r17
+	cmp	 r13,r12,59
+	bb0.n	 ne,r13,@L546
+	cmp	 r13,r12,55
+	bb1.n	 ne,r13,@L549
+	cmp	 r13,r12,63
+	ld	 r2,r17,4
+	bsr.n	 _protect_from_queue
+	or	 r3,r0,0
+	br.n	 @L550
+	st	 r2,r17,4
+	align	 4
+@L549:
+	cmp	 r12,r12,66
+	or	 r13,r13,r12
+	extu	 r13,r13,1<eq>
+	bcnd	 eq0,r13,@L550
+	ld	 r2,r20,4
+	bsr.n	 _protect_from_queue
+	or	 r3,r0,0
+	st	 r2,r20,4
+	ld	 r2,r20,8
+	bsr.n	 _protect_from_queue
+	or	 r3,r0,0
+	st	 r2,r20,8
+@L550:
+	br.n	 @L545
+	or	 r2,r0,r20
+	align	 4
+@L546:
+	ld	 r13,r17,8
+	bcnd	 ne0,r13,@L552
+	ld	 r2,r17,4
+	br	 @L545
+	align	 4
+@L552:
+	ld	 r2,r17,12
+	bcnd	 ne0,r2,@L545
+	ld	 r13,r17,4
+	bsr.n	 _gen_reg_rtx
+	ld.bu	 r2,r13,2
+	ld	 r3,r17,4
+	bsr.n	 _gen_move_insn
+	st	 r2,r17,12
+	bsr.n	 _emit_insn_before
+	ld	 r3,r17,8
+	ld	 r2,r17,12
+@L545:
+	ld.hu	 r12,r0,r23
+	cmp	 r13,r12,59
+	bb0.n	 ne,r13,@L555
+	or	 r20,r0,r2
+	cmp	 r13,r12,55
+	bb1.n	 ne,r13,@L701
+	cmp	 r13,r12,63
+	ld.bu	 r13,r23,2
+	cmp	 r13,r13,16
+	bb0	 ne,r13,@L556
+	ld	 r24,r23,4
+	ld.hu	 r13,r0,r24
+	cmp	 r13,r13,59
+	extu	 r13,r13,1<eq>
+	bcnd	 eq0,r13,@L556
+	ld	 r13,r24,4
+	st	 r13,r23,4
+	ld	 r13,r24,8
+	bcnd	 eq0,r13,@L559
+	bsr.n	 _gen_reg_rtx
+	ld.bu	 r2,r23,2
+	or	 r25,r0,r2
+	bsr.n	 _gen_move_insn
+	or	 r3,r0,r23
+	bsr.n	 _emit_insn_before
+	ld	 r3,r24,8
+	br.n	 @L554
+	or	 r2,r0,r25
+	align	 4
+@L556:
+	cmp	 r13,r12,55
+	bb1.n	 ne,r13,@L558
+	cmp	 r13,r12,63
+	ld	 r2,r23,4
+	bsr.n	 _protect_from_queue
+	or	 r3,r0,0
+	br.n	 @L559
+	st	 r2,r23,4
+	align	 4
+@L558:
+@L701:
+	cmp	 r12,r12,66
+	or	 r13,r13,r12
+	extu	 r13,r13,1<eq>
+	bcnd	 eq0,r13,@L559
+	ld	 r2,r23,4
+	bsr.n	 _protect_from_queue
+	or	 r3,r0,0
+	st	 r2,r23,4
+	ld	 r2,r23,8
+	bsr.n	 _protect_from_queue
+	or	 r3,r0,0
+	st	 r2,r23,8
+@L559:
+	br.n	 @L554
+	or	 r2,r0,r23
+	align	 4
+@L555:
+	ld	 r13,r23,8
+	bcnd	 ne0,r13,@L561
+	ld	 r2,r23,4
+	br.n	 @L702
+	cmp	 r13,r18,r15
+	align	 4
+@L561:
+	ld	 r2,r23,12
+	bcnd.n	 ne0,r2,@L702
+	cmp	 r13,r18,r15
+	ld	 r13,r23,4
+	bsr.n	 _gen_reg_rtx
+	ld.bu	 r2,r13,2
+	ld	 r3,r23,4
+	bsr.n	 _gen_move_insn
+	st	 r2,r23,12
+	bsr.n	 _emit_insn_before
+	ld	 r3,r23,8
+	ld	 r2,r23,12
+@L554:
+	cmp	 r13,r18,r15
+@L702:
+	bb0.n	 ne,r13,@L563
+	or	 r23,r0,r2
+	bsr	 _abort
+	align	 4
+@L563:
+	or.u	 r12,r0,0x35
+	or	 r12,r12,0x8
+	ld	 r11,r0,r23
+	and	 r13,r11,0x8
+	cmp	 r13,r13,r12
+	bb1	 ne,r13,@L703
+	ld	 r13,r23,4
+	or.u	 r12,r0,hi16(_mode_size)
+	ld.bu	 r13,r13,2
+	or	 r12,r12,lo16(_mode_size)
+	ld	 r13,r12[r13]
+	ld	 r12,r12[r21]
+	cmp	 r13,r13,r12
+	bb0.n	 ge,r13,@L564
+	extu	 r13,r11,1<5>
+	cmp	 r13,r13,r19
+	bb1.n	 ne,r13,@L564
+	or	 r2,r0,r21
+	or	 r3,r0,r23
+	bsr.n	 _gen_lowpart
+	or	 r22,r0,r21
+	or	 r23,r0,r2
+@L564:
+	or.u	 r12,r0,0x35
+	or	 r12,r12,0x8
+@L703:
+	ld	 r13,r0,r20
+	and	 r13,r13,0x8
+	cmp	 r13,r13,r12
+	bb1.n	 ne,r13,@L565
+	cmp	 r13,r21,r22
+	bsr	 _abort
+	align	 4
+@L565:
+	bb0.n	 ne,r13,@L704
+	or	 r2,r0,r20
+	bcnd	 ne0,r22,@L566
+	ld.hu	 r12,r0,r23
+	subu	 r13,r12,56
+	mask	 r13,r13,0xffff
+	cmp	 r13,r13,1
+	bb1.n	 ls,r13,@L704
+	subu	 r13,r12,46
+	mask	 r13,r13,0xffff
+	cmp	 r13,r13,1
+	bb1.n	 ls,r13,@L704
+	mask	 r13,r12,0xffff
+	cmp	 r12,r13,49
+	cmp	 r13,r13,113
+	or	 r12,r12,r13
+	extu	 r12,r12,1<eq>
+	bcnd	 eq0,r12,@L566
+@L704:
+	or	 r3,r0,r23
+	bsr.n	 _emit_move_insn
+	addu	 r1,r1,@L719
+@L720:
+	align	 4
+@L566:
+	bcnd.n	 eq0,r18,@L568
+	cmp	 r5,r22,8
+	cmp	 r13,r21,9
+	extu	 r11,r5,1<eq>
+	extu	 r7,r13,1<eq>
+	and	 r13,r11,r7
+	bcnd.n	 ne0,r13,@L691
+	or	 r2,r0,108
+	cmp	 r6,r21,11
+	extu	 r12,r6,1<eq>
+	and	 r13,r11,r12
+	bcnd.n	 ne0,r13,@L691
+	or	 r2,r0,109
+	cmp	 r8,r22,9
+	extu	 r9,r8,1<eq>
+	and	 r13,r9,r12
+	bcnd.n	 eq0,r13,@L571
+	cmp	 r4,r21,11
+	br.n	 @L691
+	or	 r2,r0,110
+	align	 4
+@L571:
+	cmp	 r10,r21,8
+	extu	 r11,r10,1<eq>
+	and	 r13,r9,r11
+	bcnd.n	 ne0,r13,@L691
+	or	 r2,r0,111
+	cmp	 r9,r22,11
+	extu	 r12,r9,1<eq>
+	and	 r13,r12,r11
+	bcnd.n	 ne0,r13,@L691
+	or	 r2,r0,112
+	and	 r13,r12,r7
+	bcnd.n	 eq0,r13,@L574
+	cmp	 r12,r21,9
+	or	 r2,r0,113
+@L691:
+	or	 r3,r0,r20
+	or	 r4,r0,r23
+	or	 r5,r0,0
+	bsr.n	 _emit_unop_insn
+	addu	 r1,r1,@L721
+@L722:
+	align	 4
+@L574:
+	bb0.n	 ne,r8,@L584
+	or	 r2,r0,0
+	bb0.n	 ls,r8,@L606
+	cmp	 r13,r22,10
+	bb0.n	 ne,r5,@L576
+	cmp	 r13,r21,10
+	br	 @L575
+	align	 4
+@L606:
+	bb0	 ne,r13,@L592
+	bb0	 ne,r9,@L598
+	br	 @L575
+	align	 4
+@L576:
+	bb0	 ne,r13,@L579
+	bb0	 ls,r13,@L583
+	bb0.n	 ne,r12,@L578
+	or.u	 r13,r0,hi16(_extendsfdf2_libfunc)
+	br	 @L575
+	align	 4
+@L583:
+	bb0.n	 ne,r4,@L580
+	or.u	 r13,r0,hi16(_extendsftf2_libfunc)
+	br	 @L575
+	align	 4
+@L578:
+	ld	 r2,r13,lo16(_extendsfdf2_libfunc)
+	br	 @L575
+	align	 4
+@L579:
+	or.u	 r13,r0,hi16(_extendsfxf2_libfunc)
+	ld	 r2,r13,lo16(_extendsfxf2_libfunc)
+	br	 @L575
+	align	 4
+@L580:
+	ld	 r2,r13,lo16(_extendsftf2_libfunc)
+	br	 @L575
+	align	 4
+@L584:
+	cmp	 r13,r21,10
+	bb0	 ne,r13,@L587
+	bb0	 ls,r13,@L591
+	bb0.n	 ne,r10,@L586
+	or.u	 r13,r0,hi16(_truncdfsf2_libfunc)
+	br	 @L575
+	align	 4
+@L591:
+	bb0.n	 ne,r6,@L588
+	or.u	 r13,r0,hi16(_extenddftf2_libfunc)
+	br	 @L575
+	align	 4
+@L586:
+	ld	 r2,r13,lo16(_truncdfsf2_libfunc)
+	br	 @L575
+	align	 4
+@L587:
+	or.u	 r13,r0,hi16(_extenddfxf2_libfunc)
+	ld	 r2,r13,lo16(_extenddfxf2_libfunc)
+	br	 @L575
+	align	 4
+@L588:
+	ld	 r2,r13,lo16(_extenddftf2_libfunc)
+	br	 @L575
+	align	 4
+@L592:
+	bb0.n	 ne,r10,@L594
+	or.u	 r13,r0,hi16(_truncxfsf2_libfunc)
+	bb0.n	 ne,r12,@L595
+	or.u	 r13,r0,hi16(_truncxfdf2_libfunc)
+	br	 @L575
+	align	 4
+@L594:
+	ld	 r2,r13,lo16(_truncxfsf2_libfunc)
+	br	 @L575
+	align	 4
+@L595:
+	ld	 r2,r13,lo16(_truncxfdf2_libfunc)
+	br	 @L575
+	align	 4
+@L598:
+	bb0.n	 ne,r10,@L600
+	or.u	 r13,r0,hi16(_trunctfsf2_libfunc)
+	bb0.n	 ne,r12,@L601
+	or.u	 r13,r0,hi16(_trunctfdf2_libfunc)
+	br	 @L575
+	align	 4
+@L600:
+	ld	 r2,r13,lo16(_trunctfsf2_libfunc)
+	br	 @L575
+	align	 4
+@L601:
+	ld	 r2,r13,lo16(_trunctfdf2_libfunc)
+@L575:
+	bcnd.n	 ne0,r2,@L607
+	or	 r3,r0,1
+	bsr	 _abort
+	align	 4
+@L607:
+	or	 r4,r0,r21
+	or	 r5,r0,1
+	or	 r6,r0,r23
+	bsr.n	 _emit_library_call
+	or	 r7,r0,r22
+	or	 r2,r0,r21
+	bsr.n	 _hard_libcall_value
+	addu	 r1,r1,@L723
+@L724:
+	align	 4
+@L568:
+	or.u	 r13,r0,hi16(_mode_size)
+	or	 r24,r13,lo16(_mode_size)
+	ld	 r13,r24[r22]
+	ld	 r12,r24[r21]
+	mak	 r13,r13,0<3>
+	mak	 r11,r12,0<3>
+	cmp	 r13,r13,r11
+	bb1.n	 ge,r13,@L705
+	or.u	 r13,r0,hi16(_mode_size)
+	cmp	 r13,r11,32
+	bb0.n	 gt,r13,@L608
+	addu	 r13,r12,3
+	bcnd	 ge0,r13,@L609
+	addu	 r13,r12,6
+@L609:
+	or	 r2,r0,r21
+	or	 r3,r0,r22
+	or	 r4,r0,r19
+	bsr.n	 _can_extend_p
+	ext	 r18,r13,0<2>
+	or	 r25,r0,r2
+	cmp	 r13,r25,210
+	bb1.n	 ne,r13,@L706
+	or.u	 r13,r0,hi16(_optimize)
+	ld	 r13,r24[r22]
+	mak	 r13,r13,0<3>
+	cmp	 r13,r13,31
+	bb1.n	 gt,r13,@L612
+	or.u	 r24,r0,hi16(_word_mode)
+	or	 r2,r0,r21
+	ld	 r3,r24,lo16(_word_mode)
+	bsr.n	 _can_extend_p
+	or	 r4,r0,r19
+	or	 r25,r0,r2
+	cmp	 r13,r25,210
+	bb0	 ne,r13,@L612
+	ld	 r2,r24,lo16(_word_mode)
+	bsr.n	 _gen_lowpart
+	or	 r3,r0,r20
+	or	 r3,r0,r23
+	bsr.n	 _convert_move
+	or	 r4,r0,r19
+	ld	 r2,r24,lo16(_word_mode)
+	bsr.n	 _gen_lowpart
+	or	 r3,r0,r20
+	or	 r4,r0,r2
+	or	 r2,r0,r25
+	br.n	 @L693
+	or	 r3,r0,r20
+	align	 4
+@L612:
+	bsr	 _start_sequence
+	or.u	 r13,r0,hi16(_mode_size)
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r13,r13[r22]
+	mak	 r13,r13,0<3>
+	cmp	 r13,r13,31
+	bb1.n	 gt,r13,@L614
+	or	 r25,r0,r22
+	or.u	 r13,r0,hi16(_word_mode)
+	ld	 r25,r13,lo16(_word_mode)
+	br.n	 @L707
+	or	 r2,r0,r25
+	align	 4
+@L614:
+	or	 r2,r0,r25
+@L707:
+	or	 r3,r0,r23
+	bsr.n	 _convert_to_mode
+	or	 r4,r0,r19
+	or	 r24,r0,r2
+	or	 r2,r0,r25
+	bsr.n	 _gen_lowpart
+	or	 r3,r0,r20
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+	bcnd.n	 eq0,r19,@L618
+	or.u	 r13,r0,hi16(_const0_rtx)
+	ld	 r24,r13,lo16(_const0_rtx)
+	br.n	 @L708
+	or.u	 r13,r0,hi16(_mode_size)
+	align	 4
+@L618:
+	or.u	 r13,r0,hi16(_mode_size)
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r2,r13[r25]
+	mak	 r2,r2,0<3>
+	bsr.n	 _size_int
+	subu	 r2,r2,1
+	or	 r5,r0,r2
+	or	 r2,r0,78
+	or	 r3,r0,r25
+	or	 r4,r0,r24
+	or	 r6,r0,0
+	bsr.n	 _expand_shift
+	or	 r7,r0,0
+	or	 r24,r0,r2
+	or.u	 r13,r0,hi16(_word_mode)
+	or	 r4,r0,1
+	ld	 r2,r13,lo16(_word_mode)
+	bsr.n	 _convert_to_mode
+	or	 r3,r0,r24
+	or	 r24,r0,r2
+	or.u	 r13,r0,hi16(_mode_size)
+@L708:
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r2,r13[r25]
+	bcnd	 ge0,r2,@L620
+	addu	 r2,r2,3
+@L620:
+	ext	 r22,r2,0<2>
+	cmp	 r13,r22,r18
+	bb0.n	 lt,r13,@L622
+	subu	 r13,r18,r22
+	mask	 r12,r13,3
+	bcnd.n	 eq0,r12,@L624
+	subu	 r25,r18,r22
+	cmp	 r13,r12,1
+	bb0.n	 gt,r13,@L660
+	cmp	 r13,r12,2
+	bb0.n	 gt,r13,@L661
+	or	 r2,r0,r20
+	or	 r4,r0,1
+	subu	 r25,r25,1
+	or	 r5,r0,r21
+	bsr.n	 _operand_subword
+	or	 r3,r0,r25
+	bcnd.n	 ne0,r2,@L665
+	cmp	 r13,r24,r2
+	bsr	 _abort
+	align	 4
+@L665:
+	bb1	 eq,r13,@L663
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+@L663:
+	addu	 r22,r22,1
+@L661:
+	or	 r2,r0,r20
+	or	 r4,r0,1
+	subu	 r25,r25,1
+	or	 r5,r0,r21
+	bsr.n	 _operand_subword
+	or	 r3,r0,r25
+	bcnd.n	 ne0,r2,@L669
+	cmp	 r13,r24,r2
+	bsr	 _abort
+	align	 4
+@L669:
+	bb1	 eq,r13,@L667
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+@L667:
+	addu	 r22,r22,1
+@L660:
+	or	 r2,r0,r20
+	or	 r4,r0,1
+	subu	 r25,r25,1
+	or	 r5,r0,r21
+	bsr.n	 _operand_subword
+	or	 r3,r0,r25
+	bcnd.n	 ne0,r2,@L673
+	cmp	 r13,r24,r2
+	bsr	 _abort
+	align	 4
+@L673:
+	bb1	 eq,r13,@L671
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+@L671:
+	addu	 r22,r22,1
+	cmp	 r13,r22,r18
+	bb0	 lt,r13,@L622
+@L624:
+	or	 r2,r0,r20
+@L709:
+	subu	 r3,r25,1
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,r21
+	bcnd.n	 ne0,r2,@L677
+	cmp	 r13,r24,r2
+	bsr	 _abort
+	align	 4
+@L677:
+	bb1	 eq,r13,@L675
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+@L675:
+	or	 r2,r0,r20
+	subu	 r3,r25,2
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,r21
+	bcnd.n	 ne0,r2,@L681
+	cmp	 r13,r24,r2
+	bsr	 _abort
+	align	 4
+@L681:
+	bb1	 eq,r13,@L679
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+@L679:
+	or	 r2,r0,r20
+	subu	 r3,r25,3
+	or	 r4,r0,1
+	bsr.n	 _operand_subword
+	or	 r5,r0,r21
+	bcnd.n	 ne0,r2,@L685
+	cmp	 r13,r24,r2
+	bsr	 _abort
+	align	 4
+@L685:
+	bb1	 eq,r13,@L683
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+@L683:
+	or	 r2,r0,r20
+	or	 r4,r0,1
+	subu	 r25,r25,4
+	or	 r5,r0,r21
+	bsr.n	 _operand_subword
+	or	 r3,r0,r25
+	bcnd.n	 ne0,r2,@L689
+	cmp	 r13,r24,r2
+	bsr	 _abort
+	align	 4
+@L689:
+	bb1	 eq,r13,@L687
+	bsr.n	 _emit_move_insn
+	or	 r3,r0,r24
+@L687:
+	addu	 r22,r22,4
+	cmp	 r13,r22,r18
+	bb1.n	 lt,r13,@L709
+	or	 r2,r0,r20
+@L622:
+	bsr	 _get_insns
+	bsr.n	 _end_sequence
+	or	 r25,r0,r2
+	or	 r2,r0,r16
+	or	 r3,r0,r21
+	bsr.n	 _gen_rtx
+	or	 r4,r0,r23
+	or	 r6,r0,r2
+	or	 r2,r0,r25
+	or	 r3,r0,r20
+	or	 r4,r0,r23
+	or	 r5,r0,0
+	bsr.n	 _emit_no_conflict_block
+	addu	 r1,r1,@L725
+@L726:
+	align	 4
+@L608:
+	or.u	 r13,r0,hi16(_mode_size)
+@L705:
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r13,r13[r22]
+	mak	 r13,r13,0<3>
+	cmp	 r13,r13,32
+	bb0.n	 gt,r13,@L628
+	or.u	 r13,r0,hi16(_word_mode)
+	ld	 r2,r13,lo16(_word_mode)
+	bsr.n	 _gen_lowpart
+	or	 r3,r0,r23
+	or	 r3,r0,r2
+	or	 r2,r0,r20
+	br.n	 @L694
+	or	 r4,r0,0
+	align	 4
+@L628:
+	cmp	 r13,r21,3
+	bb1.n	 ne,r13,@L629
+	cmp	 r13,r22,3
+	cmp	 r13,r22,4
+	bb0.n	 ne,r13,@L630
+	or	 r2,r0,4
+	or	 r3,r0,r23
+	bsr.n	 _convert_to_mode
+	or	 r4,r0,r19
+@L630:
+	bsr	 _abort
+	align	 4
+@L629:
+	bb1.n	 ne,r13,@L710
+	or.u	 r13,r0,hi16(_mode_size)
+	cmp	 r13,r21,4
+	bb0.n	 ne,r13,@L632
+	or	 r2,r0,4
+	or	 r3,r0,r23
+	or	 r4,r0,r19
+	bsr.n	 _convert_to_mode
+	or	 r22,r0,4
+	br.n	 @L631
+	or	 r23,r0,r2
+	align	 4
+@L632:
+	bsr	 _abort
+	align	 4
+@L631:
+	or.u	 r13,r0,hi16(_mode_size)
+@L710:
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r12,r13[r21]
+	ld	 r13,r13[r22]
+	mak	 r12,r12,0<3>
+	mak	 r13,r13,0<3>
+	cmp	 r12,r12,r13
+	bb1.n	 ge,r12,@L711
+	or.u	 r13,r0,hi16(_mode_size)
+	ld	 r13,r0,r23
+	or.u	 r12,r0,0x37
+	and	 r13,r13,0x10
+	cmp	 r13,r13,r12
+	bb1.n	 ne,r13,@L636
+	or.u	 r13,r0,hi16(_direct_load)
+	or	 r13,r13,lo16(_direct_load)
+	ld.b	 r13,r21,r13
+	bcnd	 eq0,r13,@L636
+	bsr.n	 _mode_dependent_address_p
+	ld	 r2,r23,4
+	bcnd.n	 eq0,r2,@L712
+	or	 r2,r0,r21
+@L636:
+	ld.hu	 r13,r0,r23
+	cmp	 r12,r13,51
+	cmp	 r13,r13,53
+	or	 r12,r12,r13
+	extu	 r12,r12,1<eq>
+	bcnd.n	 eq0,r12,@L634
+	or	 r2,r0,r21
+@L712:
+	or	 r3,r0,r23
+	bsr.n	 _gen_lowpart
+	addu	 r1,r1,@L727
+@L728:
+	align	 4
+@L634:
+	or.u	 r13,r0,hi16(_mode_size)
+@L711:
+	or	 r13,r13,lo16(_mode_size)
+	ld	 r12,r13[r21]
+	ld	 r13,r13[r22]
+	mak	 r12,r12,0<3>
+	mak	 r13,r13,0<3>
+	cmp	 r12,r12,r13
+	bb0.n	 gt,r12,@L637
+	or	 r2,r0,r21
+	or	 r3,r0,r22
+	bsr.n	 _can_extend_p
+	or	 r4,r0,r19
+	or	 r25,r0,r2
+	cmp	 r13,r25,210
+	bb0.n	 ne,r13,@L638
+	or.u	 r13,r0,hi16(_optimize)
+@L706:
+	ld	 r13,r13,lo16(_optimize)
+	bcnd	 le0,r13,@L639
+	ld.hu	 r13,r0,r23
+	cmp	 r13,r13,53
+	bb1.n	 ne,r13,@L713
+	or	 r2,r0,r25
+	or	 r2,r0,r22
+	bsr.n	 _force_reg
+	or	 r3,r0,r23
+	or	 r23,r0,r2
+@L639:
+	or	 r2,r0,r25
+@L713:
+	or	 r3,r0,r20
+	or	 r4,r0,r23
+@L693:
+	or	 r5,r0,r16
+	bsr.n	 _emit_unop_insn
+	addu	 r1,r1,@L729
+@L730:
+	align	 4
+@L638:
+	or	 r25,r0,r22
+	bcnd.n	 eq0,r25,@L642
+	or.u	 r13,r0,hi16(_mode_wider_mode)
+	or	 r24,r13,lo16(_mode_wider_mode)
+	or	 r2,r0,r21
+@L714:
+	or	 r3,r0,r25
+	bsr.n	 _can_extend_p
+	or	 r4,r0,r19
+	cmp	 r2,r2,210
+	bb1.n	 eq,r2,@L643
+	or	 r2,r0,r25
+	or	 r3,r0,r22
+	bsr.n	 _can_extend_p
+	or	 r4,r0,r19
+	cmp	 r2,r2,210
+	bb0.n	 eq,r2,@L656
+	or	 r2,r0,r25
+@L643:
+	ld	 r25,r24[r25]
+	bcnd.n	 ne0,r25,@L714
+	or	 r2,r0,r21
+@L642:
+	bsr	 _abort
+	align	 4
+@L637:
+	cmp	 r13,r22,6
+	extu	 r11,r13,1<eq>
+	cmp	 r13,r21,4
+	extu	 r13,r13,1<eq>
+	and	 r13,r11,r13
+	bcnd.n	 eq0,r13,@L647
+	or	 r2,r0,r22
+	or	 r3,r0,r23
+	bsr.n	 _force_reg
+	addu	 r1,r1,@L731
+@L732:
+	align	 4
+@L647:
+	cmp	 r13,r21,2
+	extu	 r9,r13,1<eq>
+	and	 r13,r11,r9
+	bcnd.n	 eq0,r13,@L648
+	or	 r3,r0,r23
+	bsr.n	 _force_reg
+	addu	 r1,r1,@L733
+@L734:
+	align	 4
+@L648:
+	cmp	 r13,r21,1
+	extu	 r10,r13,1<eq>
+	and	 r13,r11,r10
+	bcnd.n	 eq0,r13,@L649
+	or	 r2,r0,r22
+	or	 r3,r0,r23
+	bsr.n	 _force_reg
+	addu	 r1,r1,@L735
+@L736:
+	align	 4
+@L649:
+	cmp	 r13,r22,4
+	extu	 r11,r13,1<eq>
+	and	 r13,r11,r9
+	bcnd.n	 eq0,r13,@L650
+	or	 r3,r0,r23
+	bsr.n	 _force_reg
+	addu	 r1,r1,@L737
+@L738:
+	align	 4
+@L650:
+	and	 r13,r11,r10
+	bcnd.n	 eq0,r13,@L651
+	or	 r2,r0,r22
+	or	 r3,r0,r23
+	bsr.n	 _force_reg
+	addu	 r1,r1,@L739
+@L740:
+	align	 4
+@L651:
+	cmp	 r13,r22,2
+	extu	 r13,r13,1<eq>
+	and	 r13,r13,r10
+	bcnd.n	 eq0,r13,@L652
+	or	 r3,r0,r23
+	bsr.n	 _force_reg
+	addu	 r1,r1,@L741
+@L742:
+	align	 4
+@L652:
+	bb1.n	 ge,r12,@L653
+	or	 r2,r0,r21
+	bsr.n	 _gen_lowpart
+	or	 r3,r0,r23
+	or	 r3,r0,r2
+	bsr.n	 _force_reg
+	or	 r2,r0,r21
+@L692:
+	or	 r3,r0,r2
+	or	 r2,r0,r20
+	bsr.n	 _emit_move_insn
+	addu	 r1,r1,@L743
+@L744:
+	align	 4
+@L653:
+	bsr	 _abort
+	align	 4
+@L656:
+	or	 r3,r0,r23
+	bsr.n	 _convert_to_mode
+	or	 r4,r0,r19
+@L695:
+	or	 r3,r0,r2
+	or	 r2,r0,r20
+	or	 r4,r0,r19
+@L694:
+	bsr	 _convert_move
+@L542:
+	or	 r2,r0,r17
+@L654:
+@Lte9:
+	ld	 r1,r31,80
+	ld	 r15,r31,36
+	ld.d	 r24,r31,72
+	ld.d	 r22,r31,64
+	ld.d	 r20,r31,56
+	ld.d	 r18,r31,48
+	ld.d	 r16,r31,40
+	jmp.n	 r1
+	addu	 r31,r31,96
+	def	 @L743,@L542-@L744
+	def	 @L741,@L695-@L742
+	def	 @L739,@L695-@L740
+	def	 @L737,@L695-@L738
+	def	 @L735,@L695-@L736
+	def	 @L733,@L695-@L734
+	def	 @L731,@L695-@L732
+	def	 @L729,@L542-@L730
+	def	 @L727,@L692-@L728
+	def	 @L725,@L542-@L726
+	def	 @L723,@L692-@L724
+	def	 @L721,@L542-@L722
+	def	 @L719,@L542-@L720
+	def	 @L717,@L654-@L718
+	def	 @L715,@L654-@L716
+
+	align	 8
+_move_by_pieces_ninsns:
+@Ltb10:
+	cmp	 r9,r3,8
+	cmp	 r8,r3,7
+	or	 r9,r9,r8
+	or	 r11,r0,0
+	extu	 r9,r9,1<gt>
+	bcnd.n	 eq0,r9,@L792
+	or	 r6,r0,9
+	or	 r3,r0,8
+@L792:
+	or.u	 r9,r0,hi16(_mode_size)
+	or	 r12,r9,lo16(_mode_size)
+	or.u	 r9,r0,hi16(_class_narrowest_mode+4)
+@L811:
+	ld	 r8,r9,lo16(_class_narrowest_mode+4)
+	bcnd.n	 eq0,r8,@L797
+	or	 r7,r0,0
+	or.u	 r9,r0,hi16(_mode_wider_mode)
+	or	 r13,r9,lo16(_mode_wider_mode)
+@L799:
+	ld	 r9,r12[r8]
+	cmp	 r9,r9,r6
+	bb1	 ge,r9,@L798
+	or	 r7,r0,r8
+@L798:
+	ld	 r8,r13[r8]
+	bcnd	 ne0,r8,@L799
+@L797:
+	bcnd.n	 eq0,r7,@L794
+	or.u	 r9,r0,hi16(_mov_optab)
+	ld	 r9,r9,lo16(_mov_optab)
+	lda.d	 r9,r9[r7]
+	ld	 r9,r9,4
+	cmp	 r9,r9,210
+	bb0	 ne,r9,@L803
+	ld	 r8,r12[r7]
+	cmp	 r9,r8,8
+	bb1.n	 gt,r9,@L804
+	cmp	 r9,r3,7
+	cmp	 r9,r3,r8
+	bb0	 ge,r9,@L803
+	br	 @L810
+	align	 4
+@L804:
+	bb0	 gt,r9,@L803
+	ld	 r8,r12[r7]
+@L810:
+	divu	 r9,r2,r8
+	bcnd	 ne0,r8,@L806
+	tb0	 0,r0,503
+@L806:
+	bcnd.n	 ne0,r8,@L807
+	addu	 r11,r11,r9
+	tb0	 0,r0,503
+@L807:
+	mul	 r9,r9,r8
+	subu	 r2,r2,r9
+@L803:
+	ld	 r6,r12[r7]
+	cmp	 r9,r6,1
+	bb1.n	 gt,r9,@L811
+	or.u	 r9,r0,hi16(_class_narrowest_mode+4)
+@L794:
+	jmp.n	 r1
+	or	 r2,r0,r11
+@Lte10:
+
+	align	 8
+_move_by_pieces_1:
+	subu	 r31,r31,80
+	st	 r1,r31,64
+	or.u	 r13,r0,hi16(_mode_size)
+	st.d	 r20,r31,40
+	or	 r21,r0,r3
+	st.d	 r24,r31,56
+	or	 r13,r13,lo16(_mode_size)
+	st.d	 r22,r31,48
+@Ltb11:
+	or	 r24,r0,r4
+	ld	 r22,r13[r21]
+	ld	 r13,r24,32
+	cmp	 r13,r13,r22
+	bb0.n	 ge,r13,@L825
+	or	 r20,r0,r2
+@L826:
+	ld	 r13,r24,40
+	bcnd	 eq0,r13,@L827
+	ld	 r13,r24,36
+	subu	 r13,r13,r22
+	st	 r13,r24,36
+@L827:
+	ld	 r13,r24,8
+	bcnd	 eq0,r13,@L828
+	ld	 r4,r24,4
+	or	 r2,r0,55
+	or	 r3,r0,r21
+	bsr.n	 _gen_rtx
+	addu	 r1,r1,@L836
+@L837:
+	align	 4
+@L828:
+	ld	 r2,r24,4
+	ld	 r3,r24,36
+	bsr.n	 _plus_constant_wide
+	ld	 r25,r0,r24
+	or	 r4,r0,r2
+	or	 r2,r0,r25
+	bsr.n	 _change_address
+	or	 r3,r0,r21
+@L834:
+	ld	 r13,r24,24
+	bcnd.n	 eq0,r13,@L830
+	or	 r23,r0,r2
+	ld	 r4,r24,20
+	or	 r2,r0,55
+	or	 r3,r0,r21
+	bsr.n	 _gen_rtx
+	addu	 r1,r1,@L838
+@L839:
+	align	 4
+@L830:
+	ld	 r2,r24,20
+	ld	 r3,r24,36
+	bsr.n	 _plus_constant_wide
+	ld	 r25,r24,16
+	or	 r4,r0,r2
+	or	 r2,r0,r25
+	bsr.n	 _change_address
+	or	 r3,r0,r21
+@L835:
+	or	 r3,r0,r2
+	jsr.n	 r20
+	or	 r2,r0,r23
+	bsr	 _emit_insn
+	ld	 r13,r24,40
+	bcnd	 ne0,r13,@L832
+	ld	 r13,r24,36
+	addu	 r13,r13,r22
+	st	 r13,r24,36
+@L832:
+	ld	 r13,r24,32
+	subu	 r13,r13,r22
+	cmp	 r12,r13,r22
+	bb1.n	 ge,r12,@L826
+	st	 r13,r24,32
+@L825:
+@Lte11:
+	ld	 r1,r31,64
+	ld.d	 r24,r31,56
+	ld.d	 r22,r31,48
+	ld.d	 r20,r31,40
+	jmp.n	 r1
+	addu	 r31,r31,80
+	def	 @L838,@L835-@L839
+	def	 @L836,@L834-@L837
+
