@@ -127,7 +127,7 @@ def generate_all_combinations(file_dict, scenario_type):
 
 def is_problematic_combination(comb):
     #return any(f in PROBLEMATIC_FILES for f in comb)
-    return 1;
+    return 1
 
 def generate_default_permutation(comb):
     return tuple(sorted(comb, key=lambda x: (-get_file_thread_weight(x), x)))
